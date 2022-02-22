@@ -264,13 +264,14 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                 BRANCH(8);
                 return;
             }
-                
+            else{
             BRANCH(9);
             // Re-factor heap sub-tree
             this.array[nodeToMoveIndex] = value;
             this.array[index] = nodeToMove;
 
             heapDown(nodeToMoveIndex);
+            }
         }
 
         // Grow the array by 50%
