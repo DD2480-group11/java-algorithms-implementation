@@ -367,20 +367,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
             }
 
             // Remove link from replacementNode's parent to replacement
-            Node<T> replacementParent = replacementNode.parent;
-            if (replacementParent != null && replacementParent != nodeToRemoved) {
-                Node<T> replacementParentLesser = replacementParent.lesser;
-                Node<T> replacementParentGreater = replacementParent.greater;
-                if (replacementParentLesser != null && replacementParentLesser == replacementNode) {
-                    replacementParent.lesser = replacementNodeGreater;
-                    if (replacementNodeGreater != null)
-                        replacementNodeGreater.parent = replacementParent;
-                } else if (replacementParentGreater != null && replacementParentGreater == replacementNode) {
-                    replacementParent.greater = replacementNodeLesser;
-                    if (replacementNodeLesser != null)
-                        replacementNodeLesser.parent = replacementParent;
-                }
-            }
+            removeLinkFromParentOfReplacement(nodeToRemoved, replacementNode, replacementNodeLesser, replacementNodeGreater);
         }
 
         // Update the link in the tree from the nodeToRemoved to the
@@ -402,6 +389,34 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         }
         size--;
     }
+
+    /**
+     * Remove link from replacementNode's parent to replacement
+     * 
+     * @param nodeToRemoved
+     *            Node<T> to remove replace in the tree. nodeToRemoved should
+     *            NOT be NULL.
+     * @param replacementNode
+     *            Node<T> to replace nodeToRemoved in the tree. replacementNode
+     *            can be NULL.
+     */  
+    private void removeLinkFromParentOfReplacement(Node<T> nodeToRemoved, Node<T> replacementNode, Node<T> replacementNodeLesser, Node<T> replacementNodeGreater) {
+        Node<T> replacementParent = replacementNode.parent;
+        if (replacementParent != null && replacementParent != nodeToRemoved) {
+            Node<T> replacementParentLesser = replacementParent.lesser;
+            Node<T> replacementParentGreater = replacementParent.greater;
+            if (replacementParentLesser != null && replacementParentLesser == replacementNode) {
+                replacementParent.lesser = replacementNodeGreater;
+                if (replacementNodeGreater != null)
+                    replacementNodeGreater.parent = replacementParent;
+            } else if (replacementParentGreater != null && replacementParentGreater == replacementNode) {
+                replacementParent.greater = replacementNodeLesser;
+                if (replacementNodeLesser != null)
+                    replacementNodeLesser.parent = replacementParent;
+            }
+        }
+    }
+    
 
     /**
      * {@inheritDoc}
