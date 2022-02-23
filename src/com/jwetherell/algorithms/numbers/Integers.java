@@ -62,15 +62,36 @@ public class Integers {
         return builder.reverse().toString();
     }
 
+    static boolean[] reachedBranch = new boolean[100];
+    private static void BRANCH(int index) {
+        if (!reachedBranch[index]) {
+            reachedBranch[index] = true;
+            System.out.println("--------------");
+            for (int i = 0; i < reachedBranch.length; i++) {
+                if (reachedBranch[i]) {
+                    System.out.println("REACHED BRANCH #" + i);
+                }
+            }
+        }
+    }
     public static final boolean powerOfTwoUsingLoop(int numberToCheck) {
         int number = numberToCheck;
-        if (number == 0)
+        if (number == 0){
+            BRANCH(1);
             return false;
+        }else{
+            BRANCH(2);
+        }
         while (number % 2 == 0) {
+            BRANCH(3);
             number /= 2;
         }
-        if (number > 1)
+        if (number > 1){
+            BRANCH(4);
             return false;
+        }else{
+            BRANCH(5);
+        }
         return true;
     }
 
