@@ -15,16 +15,37 @@ import java.util.*;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class Kruskal {
+    static boolean[] reachedBranch = new boolean[100];
+
+    static void BRANCH(int index) {
+        if (!reachedBranch[index]) {
+            System.out.println("REACHED BRANCH #" + index);
+            reachedBranch[index] = true;
+            }
+        }
+
 
     private Kruskal() { }
 
     public static Graph.CostPathPair<Integer> getMinimumSpanningTree(Graph<Integer> graph) {
-        if (graph == null)
+        if (graph == null){
+            BRANCH(0);
             throw (new NullPointerException("Graph must be non-NULL."));
-
+        }
+        else{
+            BRANCH(1);
+        }
+            
         // Kruskal's algorithm only works on undirected graphs
-        if (graph.getType() == Graph.TYPE.DIRECTED)
+        if (graph.getType() == Graph.TYPE.DIRECTED){
+            BRANCH(2);
             throw (new IllegalArgumentException("Undirected graphs only."));
+           
+        }
+        else{
+            BRANCH(3);
+        }
+            
 
         int cost = 0;
         final List<Graph.Edge<Integer>> path = new ArrayList<Graph.Edge<Integer>>();
@@ -46,9 +67,13 @@ public class Kruskal {
 
             // If from vertex and to vertex are from different parts of tree then add this edge to result and union vertices' parts
             if (!isTheSamePart(edge.getFromVertex(), edge.getToVertex(), membershipMap)) {
+                BRANCH(4);
                 union(edge.getFromVertex(), edge.getToVertex(), membershipMap);
                 path.add(edge);
                 cost += edge.getCost();
+            }
+            else{
+                BRANCH(5);
             }
         }
 
