@@ -161,6 +161,7 @@ public class Graphs {
         final Graph<Integer> graph = new Graph<Integer>(Graph.TYPE.DIRECTED, verticies, edges);
     }
 
+
     // Ideal undirected path
     private Map<Graph.Vertex<Integer>, Graph.CostPathPair<Integer>> getIdealUndirectedPath(UndirectedGraph undirected) {
         final HashMap<Graph.Vertex<Integer>, Graph.CostPathPair<Integer>> idealUndirectedPath = new HashMap<Graph.Vertex<Integer>, Graph.CostPathPair<Integer>>();
@@ -784,6 +785,23 @@ public class Graphs {
         }
     }
 
+    // To improve branch coverage: Test that null graph throws exception
+    @Test()
+    public void testFloydWarshallNull() throws Exception{
+
+        Graph<Integer> NullGraph = null;
+
+        try{
+            FloydWarshall.getAllPairsShortestPaths(NullGraph);
+            fail("Null graph should not be allowed");
+
+        } catch (NullPointerException e) {
+            // pass
+        }
+        
+    }
+    
+
     @Test
     public void cycleCheckOnUndirected() {
         final List<Vertex<Integer>> cycledVerticies = new ArrayList<Vertex<Integer>>();
@@ -981,6 +999,7 @@ public class Graphs {
         }
     }
 
+
     // Add branch coverage test for Kruskal: Test with NULL graph
     @Test()
       public void testKruskalNull() throws Exception{
@@ -1011,6 +1030,23 @@ public class Graphs {
 
       }
 
+
+    
+    @Test()
+     public void testBellmanFordNull() throws Exception{
+        Graph<Integer> NullGraph = null;
+        final Graph.Vertex<Integer> start = null;
+        final Graph.Vertex<Integer> end = null;
+
+         try{
+             BellmanFord.getShortestPath(NullGraph, start, end);
+             fail("Null graph should not be allowed");
+
+         } catch (NullPointerException e) {
+             // pass
+         }
+
+     }
 
 
     /*
