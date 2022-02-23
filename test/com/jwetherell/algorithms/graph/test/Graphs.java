@@ -13,6 +13,8 @@ import com.jwetherell.algorithms.graph.*;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.jwetherell.algorithms.data_structures.Graph;
 import com.jwetherell.algorithms.data_structures.Graph.Edge;
@@ -159,6 +161,7 @@ public class Graphs {
 
         final Graph<Integer> graph = new Graph<Integer>(Graph.TYPE.DIRECTED, verticies, edges);
     }
+
 
     // Ideal undirected path
     private Map<Graph.Vertex<Integer>, Graph.CostPathPair<Integer>> getIdealUndirectedPath(UndirectedGraph undirected) {
@@ -782,6 +785,23 @@ public class Graphs {
             }
         }
     }
+
+    // To improve branch coverage: Test that null graph throws exception
+    @Test()
+    public void testFloydWarshallNull() throws Exception{
+
+        Graph<Integer> NullGraph = null;
+
+        try{
+            FloydWarshall.getAllPairsShortestPaths(NullGraph);
+            fail("Null graph should not be allowed");
+
+        } catch (NullPointerException e) {
+            // pass
+        }
+        
+    }
+    
 
     @Test
     public void cycleCheckOnUndirected() {
