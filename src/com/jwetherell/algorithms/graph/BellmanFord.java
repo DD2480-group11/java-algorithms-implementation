@@ -22,6 +22,15 @@ public class BellmanFord {
 
     private BellmanFord() { }
 
+   
+    static boolean[] reachedBranch = new boolean[100];
+    static void BRANCH(int index) {
+        if (!reachedBranch[index]) {
+            System.out.println("REACHED BRANCH #" + index);
+            reachedBranch[index] = true;
+            }
+        }
+
     /**
      * Get shortest path for all vertices
      */
@@ -45,9 +54,16 @@ public class BellmanFord {
      * Get shortest path to from 'start' to 'end' vertices
      */
     public static Graph.CostPathPair<Integer> getShortestPath(Graph<Integer> graph, Graph.Vertex<Integer> start, Graph.Vertex<Integer> end) {
-        if (graph == null)
+       
+        if (graph == null){
+            BRANCH(0);
             throw (new NullPointerException("Graph must be non-NULL."));
 
+        }
+        else{
+            BRANCH(1);
+        }
+           
         final Map<Graph.Vertex<Integer>, List<Graph.Edge<Integer>>> paths = new HashMap<Graph.Vertex<Integer>, List<Graph.Edge<Integer>>>();
         final Map<Graph.Vertex<Integer>, Graph.CostVertexPair<Integer>> costs = new HashMap<Graph.Vertex<Integer>, Graph.CostVertexPair<Integer>>();
         return getShortestPath(graph, start, end, paths, costs);

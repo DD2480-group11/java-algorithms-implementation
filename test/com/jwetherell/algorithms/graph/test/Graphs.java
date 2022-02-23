@@ -16,6 +16,8 @@ import org.junit.Test;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
+
 import com.jwetherell.algorithms.data_structures.Graph;
 import com.jwetherell.algorithms.data_structures.Graph.Edge;
 import com.jwetherell.algorithms.data_structures.Graph.TYPE;
@@ -999,6 +1001,23 @@ public class Graphs {
             assertTrue("A* path error. path="+path+" idealPathPair="+ideal, path.equals(ideal));
         }
     }
+
+    
+    @Test()
+     public void testBellmanFordNull() throws Exception{
+        Graph<Integer> NullGraph = null;
+        final Graph.Vertex<Integer> start = null;
+        final Graph.Vertex<Integer> end = null;
+
+         try{
+             BellmanFord.getShortestPath(NullGraph, start, end);
+             fail("Null graph should not be allowed");
+
+         } catch (NullPointerException e) {
+             // pass
+         }
+
+     }
 
     /*
      * Makes a zero weighted directed graph, so that there is an edge between two vertices if the difference between the 
