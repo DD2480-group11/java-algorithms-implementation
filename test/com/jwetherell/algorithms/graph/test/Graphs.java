@@ -785,22 +785,6 @@ public class Graphs {
         }
     }
 
-    // To improve branch coverage: Test that null graph throws exception
-    @Test()
-    public void testFloydWarshallNull() throws Exception{
-
-        Graph<Integer> NullGraph = null;
-
-        try{
-            FloydWarshall.getAllPairsShortestPaths(NullGraph);
-            fail("Null graph should not be allowed");
-
-        } catch (NullPointerException e) {
-            // pass
-        }
-        
-    }
-    
 
     @Test
     public void cycleCheckOnUndirected() {
@@ -1000,55 +984,6 @@ public class Graphs {
     }
 
 
-    // Add branch coverage test for Kruskal: Test with NULL graph
-    @Test()
-      public void testKruskalNull() throws Exception{
-         Graph<Integer> NullGraph = null;
-
-          try{
-              Kruskal.getMinimumSpanningTree(NullGraph);
-              fail("Null graph should not be allowed");
-
-          } catch (NullPointerException e) {
-              // pass
-          }
-
-      }
-
-    // Add branch coverage test for Kruskal: Test with directed graph
-      @Test()
-      public void testKruskalDirected() throws Exception{
-        final DirectedGraph directed = new DirectedGraph();
-    
-          try{
-              Kruskal.getMinimumSpanningTree(directed.graph);
-              fail("Directed graph should not be allowed");
-
-          } catch (IllegalArgumentException e) {
-              // pass
-          }
-
-      }
-
-
-    
-    @Test()
-     public void testBellmanFordNull() throws Exception{
-        Graph<Integer> NullGraph = null;
-        final Graph.Vertex<Integer> start = null;
-        final Graph.Vertex<Integer> end = null;
-
-         try{
-             BellmanFord.getShortestPath(NullGraph, start, end);
-             fail("Null graph should not be allowed");
-
-         } catch (NullPointerException e) {
-             // pass
-         }
-
-     }
-
-
     /*
      * Makes a zero weighted directed graph, so that there is an edge between two vertices if the difference between the 
      * vertices values is >= K
@@ -1074,5 +1009,71 @@ public class Graphs {
 
         final Graph<Integer> g = new Graph<Integer>(TYPE.DIRECTED, vertices, edges);
         return g;
+    }
+
+    @Test()
+    public void testFloydWarshallNull() throws Exception{
+         Graph<Integer> NullGraph = null;
+
+        // Requirement:
+        // When graph is null an exception should be thrown
+         try{
+            FloydWarshall.getAllPairsShortestPaths(NullGraph);
+            fail("Null graph should not be allowed");
+
+            } catch (NullPointerException e) {
+             // pass
+        }
+
+    }
+
+    @Test()
+    public void testBellmanFordNull() throws Exception{
+        Graph<Integer> NullGraph = null;
+        final Graph.Vertex<Integer> start = null;
+        final Graph.Vertex<Integer> end = null;
+
+        // Requirement:
+        // When graph is null an exception should be thrown
+        try{
+            BellmanFord.getShortestPath(NullGraph, start, end);
+            fail("Null graph should not be allowed");
+
+            } catch (NullPointerException e) {
+              // pass
+        }
+
+    }
+
+    @Test()
+    public void testKruskalNull() throws Exception{
+        Graph<Integer> NullGraph = null;
+
+        // Requirement:
+        // When graph is null an exception should be thrown
+        try{
+            Kruskal.getMinimumSpanningTree(NullGraph);
+            fail("Null graph should not be allowed");
+
+            } catch (NullPointerException e) {
+               // pass
+        }
+    }
+
+
+    @Test()
+    public void testKruskalDirected() throws Exception{
+        final DirectedGraph directed = new DirectedGraph();
+
+        // Requirement:
+        // When graph is a directed graph an exception should be thrown
+        try{
+            Kruskal.getMinimumSpanningTree(directed.graph);
+            fail("Directed graph should not be allowed");
+
+            } catch (IllegalArgumentException e) {
+               // pass
+        }
+
     }
 }
