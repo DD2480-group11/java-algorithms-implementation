@@ -155,6 +155,13 @@ public class MathematicsTest {
             assertTrue("Multiplication using loop with int input. a=" + a + " b=" + b + " result=" + result + " check=" + check, (result == check));
         }
     }
+    @Test
+     public void testMultiplicationUsingFFTZero(){
+        long result = Integer.parseInt(Multiplication.multiplyUsingFFT("0", "0"));
+        long expected = 0;
+
+        assertTrue(result == expected);
+     }
 
     @Test
     public void division() {
@@ -309,4 +316,3 @@ public class MathematicsTest {
             assertFalse("Miller-Rabin test error. " + composite, Primes.millerRabinTest(composite));
     }
 }
-
