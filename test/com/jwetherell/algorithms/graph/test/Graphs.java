@@ -13,6 +13,7 @@ import com.jwetherell.algorithms.graph.*;
 
 import org.junit.Assert;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.jwetherell.algorithms.data_structures.Graph;
 import com.jwetherell.algorithms.data_structures.Graph.Edge;
@@ -979,6 +980,38 @@ public class Graphs {
             assertTrue("A* path error. path="+path+" idealPathPair="+ideal, path.equals(ideal));
         }
     }
+
+    // Add branch coverage test for Kruskal: Test with NULL graph
+    @Test()
+      public void testKruskalNull() throws Exception{
+         Graph<Integer> NullGraph = null;
+
+          try{
+              Kruskal.getMinimumSpanningTree(NullGraph);
+              fail("Null graph should not be allowed");
+
+          } catch (NullPointerException e) {
+              // pass
+          }
+
+      }
+
+    // Add branch coverage test for Kruskal: Test with directed graph
+      @Test()
+      public void testKruskalDirected() throws Exception{
+        final DirectedGraph directed = new DirectedGraph();
+    
+          try{
+              Kruskal.getMinimumSpanningTree(directed.graph);
+              fail("Directed graph should not be allowed");
+
+          } catch (IllegalArgumentException e) {
+              // pass
+          }
+
+      }
+
+
 
     /*
      * Makes a zero weighted directed graph, so that there is an edge between two vertices if the difference between the 
