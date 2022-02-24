@@ -211,14 +211,25 @@ public abstract class List<T> implements IList<T> {
         public boolean validate() {
             int localSize = 0;
             for (int i=0; i<array.length; i++) {
+                BRANCH(0);
                 T t = array[i];
                 if (i<size) {
-                    if (t==null) return false;
+                    BRANCH(1);
+                    if (t==null) {
+                        // This branch is not reached in the tests
+                        BRANCH(2);
+                        return false;
+                    }
+                    else {
+                        BRANCH(3);
+                    }
                     localSize++;
                 } else {
+                    BRANCH(4);
                     if (t!=null) return false;
                 }
             }
+            BRANCH(5);
             return (localSize==size);
         }
 
