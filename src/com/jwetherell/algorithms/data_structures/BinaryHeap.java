@@ -59,10 +59,16 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         private T[] array = (T[]) new Comparable[MINIMUM_SIZE];
 
 
-        private void BRANCH(int index) {
-        if (!reachedBranch[index]) {
-            System.out.println("REACHED BRANCH #" + index);
-            reachedBranch[index] = true;
+        static void BRANCH(int index) {
+            if (!reachedBranch[index]) {
+                reachedBranch[index] = true;
+                System.out.println("--------------");
+                System.out.println("BinaryHeapArray.heapDown\n");
+                for (int i = 0; i < reachedBranch.length; i++) {
+                    if (reachedBranch[i]) {
+                        System.out.println("REACHED BRANCH #" + i);
+                    }
+                }
             }
         }
 
