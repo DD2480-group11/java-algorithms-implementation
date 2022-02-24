@@ -14,6 +14,7 @@ import com.jwetherell.algorithms.data_structures.interfaces.IList;
  */
 @SuppressWarnings("unchecked")
 public abstract class List<T> implements IList<T> {
+    static boolean[] reachedBranch = new boolean[100];
 
     /**
      * A dynamic array, growable array, resizable array, dynamic table, or array
@@ -39,6 +40,18 @@ public abstract class List<T> implements IList<T> {
             return add(size,value);
         }
 
+        private static void BRANCH(int index) {
+            if (!reachedBranch[index]) {
+                reachedBranch[index] = true;
+                System.out.println("--------------");
+                for (int i = 0; i < reachedBranch.length; i++) {
+                    if (reachedBranch[i]) {
+                        System.out.println("REACHED BRANCH #" + i);
+                    }
+                }
+            }
+        }
+
         /**
          * Add value to list at index.
          * 
@@ -46,15 +59,23 @@ public abstract class List<T> implements IList<T> {
          * @param value to add to list.
          */
         public boolean add(int index, T value) {
-            if (size >= array.length)
+            if (size >= array.length) {
+                // This branch is never reached in the tests.
+                BRANCH(0);
                 grow();
+            }
             if (index==size) {
+                BRANCH(1);
+
                 array[size] = value;
             } else {
+                BRANCH(2);
+
                 // Shift the array down one spot
                 System.arraycopy(array, index, array, index+1, size - index);
                 array[index] = value;
             }
+            //BRANCH(3);
             size++;
             return true;
         }
@@ -99,6 +120,7 @@ public abstract class List<T> implements IList<T> {
 
         // Grow the array by 50%
         private void grow() {
+            BRANCH(0);
             int growSize = size + (size<<1);
             array = Arrays.copyOf(array, growSize);
         }
