@@ -15,16 +15,42 @@ import java.util.*;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class Kruskal {
+    static boolean[] reachedBranch = new boolean[100];
+
+    static void BRANCH(int index) {
+            if (!reachedBranch[index]) {
+                reachedBranch[index] = true;
+                System.out.println("--------------");
+                for (int i = 0; i < reachedBranch.length; i++) {
+                    if (reachedBranch[i]) {
+                        System.out.println("REACHED BRANCH #" + i);
+                    }
+                }
+            }
+        }
+
 
     private Kruskal() { }
 
     public static Graph.CostPathPair<Integer> getMinimumSpanningTree(Graph<Integer> graph) {
-        if (graph == null)
+        if (graph == null){
+            BRANCH(0);
             throw (new NullPointerException("Graph must be non-NULL."));
-
+        }
+        else{
+            BRANCH(1);
+        }
+            
         // Kruskal's algorithm only works on undirected graphs
-        if (graph.getType() == Graph.TYPE.DIRECTED)
+        if (graph.getType() == Graph.TYPE.DIRECTED){
+            BRANCH(2);
             throw (new IllegalArgumentException("Undirected graphs only."));
+           
+        }
+        else{
+            BRANCH(3);
+        }
+            
 
         int cost = 0;
         final List<Graph.Edge<Integer>> path = new ArrayList<Graph.Edge<Integer>>();
@@ -32,6 +58,7 @@ public class Kruskal {
         // Prepare data to store information which part of tree given vertex is
         HashMap<Graph.Vertex<Integer>, HashSet<Graph.Vertex<Integer>>> membershipMap = new HashMap<Graph.Vertex<Integer>, HashSet<Graph.Vertex<Integer>>>();
         for (Graph.Vertex<Integer> v : graph.getVertices()) {
+            BRANCH(4);
             HashSet<Graph.Vertex<Integer>> set = new HashSet<Graph.Vertex<Integer>>();
             set.add(v);
             membershipMap.put(v, set);
@@ -42,13 +69,18 @@ public class Kruskal {
         PriorityQueue<Graph.Edge<Integer>> edgeQueue = new PriorityQueue<Graph.Edge<Integer>>(graph.getEdges());
 
         while (!edgeQueue.isEmpty()) {
+            BRANCH(5);
             Graph.Edge<Integer> edge = edgeQueue.poll();
 
             // If from vertex and to vertex are from different parts of tree then add this edge to result and union vertices' parts
             if (!isTheSamePart(edge.getFromVertex(), edge.getToVertex(), membershipMap)) {
+                BRANCH(6);
                 union(edge.getFromVertex(), edge.getToVertex(), membershipMap);
                 path.add(edge);
                 cost += edge.getCost();
+            }
+            else{
+                BRANCH(7);
             }
         }
 
