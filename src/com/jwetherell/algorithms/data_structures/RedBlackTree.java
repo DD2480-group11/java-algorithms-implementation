@@ -52,6 +52,7 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
         if (!reachedBranch[index]) {
             reachedBranch[index] = true;
             System.out.println("--------------");
+            System.out.println("RedBlackTree.balanceAfterDelete\n");
             for (int i = 0; i < reachedBranch.length; i++) {
                 if (reachedBranch[i]) {
                     System.out.println("REACHED BRANCH #" + i);
