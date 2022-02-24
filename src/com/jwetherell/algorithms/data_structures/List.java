@@ -75,7 +75,7 @@ public abstract class List<T> implements IList<T> {
                 System.arraycopy(array, index, array, index+1, size - index);
                 array[index] = value;
             }
-            //BRANCH(3);
+            BRANCH(3);
             size++;
             return true;
         }
