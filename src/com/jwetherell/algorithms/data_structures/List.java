@@ -102,18 +102,37 @@ public abstract class List<T> implements IList<T> {
          * @return value at index.
          */
         public T remove(int index) {
-            if (index<0 || index>=size) return null;
+            if (index<0 || index>=size) {
+                // This branch was not reached in the tests
+                BRANCH(0);
+                return null;
+            }
+            else {
+                BRANCH(1);
+            }
 
             T t = array[index];
             if (index != --size) {
+                BRANCH(2);
                 // Shift the array down one spot
                 System.arraycopy(array, index + 1, array, index, size - index);
+            }
+            else {
+                BRANCH(3);
             }
             array[size] = null;
 
             int shrinkSize = array.length>>1;
-            if (shrinkSize >= MINIMUM_SIZE && size < shrinkSize)
+            if (shrinkSize >= MINIMUM_SIZE && size < shrinkSize) {
+                // This branch was not reached in the tests
+                BRANCH(4);
                 shrink();
+            }
+            else {
+                BRANCH(5);
+            }
+
+            BRANCH(6);
 
             return t;
         }
@@ -127,6 +146,7 @@ public abstract class List<T> implements IList<T> {
 
         // Shrink the array by 50%
         private void shrink() {
+            BRANCH(0);
             int shrinkSize = array.length>>1;
             array = Arrays.copyOf(array, shrinkSize);
         }
