@@ -22,12 +22,17 @@ public class BellmanFord {
 
     private BellmanFord() { }
 
-   
     static boolean[] reachedBranch = new boolean[100];
+
     static void BRANCH(int index) {
-        if (!reachedBranch[index]) {
-            System.out.println("REACHED BRANCH #" + index);
-            reachedBranch[index] = true;
+            if (!reachedBranch[index]) {
+                reachedBranch[index] = true;
+                System.out.println("--------------");
+                for (int i = 0; i < reachedBranch.length; i++) {
+                    if (reachedBranch[i]) {
+                        System.out.println("REACHED BRANCH #" + i);
+                    }
+                }
             }
         }
 
