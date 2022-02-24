@@ -7,6 +7,19 @@ import com.jwetherell.algorithms.numbers.Complex;
 
 public class Multiplication {
 
+    static boolean[] reachedBranch = new boolean[200];
+     private static void BRANCH(int index, String name) {
+         if (!reachedBranch[index]) {
+             reachedBranch[index] = true;
+             System.out.println("--------------");
+             System.out.println("Multiplication." + name + "\n");
+             for (int i = 0; i < reachedBranch.length; i++) {
+                 if (reachedBranch[i]) {
+                     System.out.println("REACHED BRANCH #" + i);
+                 }
+             }
+         }
+     }
     public static final long multiplication(int a, int b) {
         long result = ((long) a) * ((long) b);
         return result;
@@ -54,33 +67,50 @@ public class Multiplication {
     }
 
     public static String multiplyUsingFFT(String a, String b) {
+        String name = "multiplyUsingFFT";
         if (a.equals("0") || b.equals("0")) {
+            BRANCH(1,name);
             return "0";
+        }else{
+            BRANCH(2,name);
         }
         boolean negative = false;
         if ((a.charAt(0) == '-' && b.charAt(0) != '-') || (a.charAt(0) != '-' && b.charAt(0) == '-')) {
+            BRANCH(3,name);
             negative = true;
+        }else{
+            BRANCH(4,name);
         }
         if (a.charAt(0) == '-') {
+            BRANCH(5,name);
             a = a.substring(1);
+        }else{
+            BRANCH(6,name);
         }
         if (b.charAt(0) == '-') {
+            BRANCH(7,name);
             b = b.substring(1);
+        }else{
+            BRANCH(8,name);
         }
         int size = 1;
         while (size < (a.length() + b.length())) {
+            BRANCH(9,name);
             size *= 2;
         }
         Complex[] aCoefficients = new Complex[size];
         Complex[] bCoefficients = new Complex[size];
         for (int i = 0; i < size; i++) {
+            BRANCH(10,name);
             aCoefficients[i] = new Complex();
             bCoefficients[i] = new Complex();
         }
         for (int i = 0; i < a.length(); i++) {
+            BRANCH(11,name);
             aCoefficients[i] = new Complex((double) (Character.getNumericValue(a.charAt(a.length() - i - 1))), 0.0);
         }
         for (int i = 0; i < b.length(); i++) {
+            BRANCH(12,name);
             bCoefficients[i] = new Complex((double) (Character.getNumericValue(b.charAt(b.length() - i - 1))), 0.0);
         }
 
@@ -88,9 +118,11 @@ public class Multiplication {
         FastFourierTransform.cooleyTukeyFFT(bCoefficients);
 
         for (int i = 0; i < size; i++) {
+            BRANCH(13,name);
             aCoefficients[i] = aCoefficients[i].multiply(bCoefficients[i]);
         }
         for (int i = 0; i < size / 2; i++) {
+            BRANCH(14,name);
             Complex temp = aCoefficients[i];
             aCoefficients[i] = aCoefficients[size - i - 1];
             aCoefficients[size - i - 1] = temp;
@@ -100,40 +132,58 @@ public class Multiplication {
         ArrayList<Integer> res = new ArrayList<Integer>();
         int pass = 0;
         for (int i = 0; i < size; i++) {
+            BRANCH(15,name);
             res.add((int) (pass + Math.floor((aCoefficients[i].abs() + 1) / size)));
             if (res.get(i) >= 10) {
+                BRANCH(16,name);
                 pass = res.get(i) / 10;
                 res.set(i, res.get(i) % 10);
             } else {
+                BRANCH(17,name);
                 pass = 0;
             }
         }
         Collections.reverse(res);
         StringBuilder result = new StringBuilder();
         if (negative) {
+            BRANCH(18,name);
             result.append('-');
+        }else{
+            BRANCH(19,name);
         }
         boolean startPrinting = false;
         for (Integer x : res) {
+            BRANCH(20,name);
             if (x != 0) {
+                BRANCH(21,name);
                 startPrinting = true;
+            }else{
+                BRANCH(22,name);
             }
             if (startPrinting) {
+                BRANCH(23,name);
                 result.append(x);
+            }else{
+                BRANCH(24,name);
             }
         }
         return result.toString();
     }
 
     public static String multiplyUsingLoopWithStringInput(String a, String b) {
+        String name = "multiplyUsingLoopWithStringInput";
         int k,i,j,carry=0,rem,flag=0,lim1,lim2,mul;
 
         boolean aIsNegative = false;
         ArrayList<Integer> first = new ArrayList<Integer>();
         for (char n : a.toCharArray()){
+            BRANCH(1,name);
             if (n=='-') {
+                BRANCH(2,name);
                 aIsNegative = true;
                 continue;
+            }else{
+                BRANCH(3,name);
             }
             first.add(n-'0');
         }
@@ -141,9 +191,13 @@ public class Multiplication {
         boolean bIsNegative = false;
         ArrayList<Integer> second = new ArrayList<Integer>();
         for (char n : b.toCharArray()){
+            BRANCH(4,name);
             if (n=='-') {
+                BRANCH(5,name);
                 bIsNegative = true;
                 continue;
+            }else{
+                BRANCH(6,name);
             }
             second.add(n-'0');
         }
@@ -153,8 +207,10 @@ public class Multiplication {
 
         ArrayList<Integer> res = new ArrayList<Integer>(Collections.nCopies(first.size()+second.size(), 0));
         for (i=0;i<=lim1;i++) {
+            BRANCH(7,name);
             k=i;
             for (j=0;j<=lim2;j++) {
+                BRANCH(8,name);
                 int f = first.get(i);
                 int s = second.get(j);
                 mul=f*s;
@@ -165,26 +221,44 @@ public class Multiplication {
         }
 
         for (i=(lim1+lim2)+1;i>=0;i--) {
+            BRANCH(9,name);
             if (flag==1){
+                BRANCH(10,name);
                 res.set(i,res.get(i)+carry);
                 flag=0;
+            }else{
+                BRANCH(11,name);
             }
 
             if (res.get(i)>=10 && i!=0) {
+                BRANCH(12, name);
                 rem=res.get(i)%10;
                 carry=res.get(i)/10;
                 res.set(i,rem);
                 flag++;
+            }else{
+                BRANCH(13,name);
             }
         }
 
         StringBuilder sb = new StringBuilder();
-        if (aIsNegative ^ bIsNegative)
+        if (aIsNegative ^ bIsNegative){
+            BRANCH(14,name);
             sb.append('-');
+        }else{
+            BRANCH(15,name);
+        }
+
         boolean zeroCheck = true;
         for (Integer s : res) {
-            if (zeroCheck && s.equals(0))
+            BRANCH(16,name);
+            if (zeroCheck && s.equals(0)){
+                BRANCH(17,name);
                 continue;
+            }else{
+                BRANCH(18,name);
+            }
+
             zeroCheck = false;
             sb.append(s);
         }

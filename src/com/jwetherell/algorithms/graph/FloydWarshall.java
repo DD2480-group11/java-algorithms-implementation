@@ -23,6 +23,7 @@ public class FloydWarshall {
             if (!reachedBranch[index]) {
                 reachedBranch[index] = true;
                 System.out.println("--------------");
+                System.out.println("FloydWarshall.getAllPairsShortestPaths\n");
                 for (int i = 0; i < reachedBranch.length; i++) {
                     if (reachedBranch[i]) {
                         System.out.println("REACHED BRANCH #" + i);

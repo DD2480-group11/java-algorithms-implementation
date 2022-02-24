@@ -14,6 +14,7 @@ import com.jwetherell.algorithms.data_structures.interfaces.IList;
  */
 @SuppressWarnings("unchecked")
 public abstract class List<T> implements IList<T> {
+    static boolean[] reachedBranch = new boolean[100];
 
     /**
      * A dynamic array, growable array, resizable array, dynamic table, or array
@@ -39,6 +40,19 @@ public abstract class List<T> implements IList<T> {
             return add(size,value);
         }
 
+        private static void BRANCH(int index, String name) {
+            if (!reachedBranch[index]) {
+                reachedBranch[index] = true;
+                System.out.println("--------------");
+                System.out.println("ArrayList." + name + "\n");
+                for (int i = 0; i < reachedBranch.length; i++) {
+                    if (reachedBranch[i]) {
+                        System.out.println("REACHED BRANCH #" + i);
+                    }
+                }
+            }
+        }
+
         /**
          * Add value to list at index.
          * 
@@ -46,15 +60,24 @@ public abstract class List<T> implements IList<T> {
          * @param value to add to list.
          */
         public boolean add(int index, T value) {
-            if (size >= array.length)
+            String name = "add";
+            if (size >= array.length) {
+                // This branch is never reached in the tests.
+                BRANCH(0,name);
                 grow();
+            }
             if (index==size) {
+                BRANCH(1,name);
+
                 array[size] = value;
             } else {
+                BRANCH(2,name);
+
                 // Shift the array down one spot
                 System.arraycopy(array, index, array, index+1, size - index);
                 array[index] = value;
             }
+            BRANCH(3,name);
             size++;
             return true;
         }
@@ -81,30 +104,54 @@ public abstract class List<T> implements IList<T> {
          * @return value at index.
          */
         public T remove(int index) {
-            if (index<0 || index>=size) return null;
+            String name = "remove";
+            if (index<0 || index>=size) {
+                // This branch was not reached in the tests
+                BRANCH(0,name);
+                return null;
+            }
+            else {
+                BRANCH(1,name);
+            }
 
             T t = array[index];
             if (index != --size) {
+                BRANCH(2,name);
                 // Shift the array down one spot
                 System.arraycopy(array, index + 1, array, index, size - index);
+            }
+            else {
+                BRANCH(3,name);
             }
             array[size] = null;
 
             int shrinkSize = array.length>>1;
-            if (shrinkSize >= MINIMUM_SIZE && size < shrinkSize)
+            if (shrinkSize >= MINIMUM_SIZE && size < shrinkSize) {
+                // This branch was not reached in the tests
+                BRANCH(4,name);
                 shrink();
+            }
+            else {
+                BRANCH(5,name);
+            }
+
+            BRANCH(6,name);
 
             return t;
         }
 
         // Grow the array by 50%
         private void grow() {
+            String name = "grow";
+            BRANCH(0,name);
             int growSize = size + (size<<1);
             array = Arrays.copyOf(array, growSize);
         }
 
         // Shrink the array by 50%
         private void shrink() {
+            String name = "shrink";
+            BRANCH(0,name);
             int shrinkSize = array.length>>1;
             array = Arrays.copyOf(array, shrinkSize);
         }
@@ -167,16 +214,28 @@ public abstract class List<T> implements IList<T> {
          */
         @Override
         public boolean validate() {
+            String name = "validate";
             int localSize = 0;
             for (int i=0; i<array.length; i++) {
+                BRANCH(0, name);
                 T t = array[i];
                 if (i<size) {
-                    if (t==null) return false;
+                    BRANCH(1, name);
+                    if (t==null) {
+                        // This branch is not reached in the tests
+                        BRANCH(2, name);
+                        return false;
+                    }
+                    else {
+                        BRANCH(3, name);
+                    }
                     localSize++;
                 } else {
+                    BRANCH(4, name);
                     if (t!=null) return false;
                 }
             }
+            BRANCH(5, name);
             return (localSize==size);
         }
 

@@ -2,6 +2,20 @@ package com.jwetherell.algorithms.mathematics;
 
 public class Division {
 
+    static boolean[] reachedBranch = new boolean[200];
+    private static void BRANCH(int index) {
+        if (!reachedBranch[index]) {
+            reachedBranch[index] = true;
+            System.out.println("--------------");
+            System.out.println("Division.divisionUsingLoop\n");
+            for (int i = 0; i < reachedBranch.length; i++) {
+                if (reachedBranch[i]) {
+                    System.out.println("REACHED BRANCH #" + i);
+                }
+            }
+        }
+    }
+
     public static final long division(int a, int b) {
         long result = ((long) a) / ((long) b);
         return result;
@@ -14,9 +28,15 @@ public class Division {
         long temp = absA;
         long result = 0;
         while (temp >= 0) {
+            BRANCH(1);
             temp -= absB;
-            if (temp >= 0)
+            if (temp >= 0){
+                BRANCH(2);
                 result++;
+            }else{
+                BRANCH(3);
+            }
+            BRANCH(4);
         }
         return (a > 0 && b > 0 || a < 0 && b < 0) ? result : -result;
     }
