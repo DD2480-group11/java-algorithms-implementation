@@ -59,6 +59,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         private T[] array = (T[]) new Comparable[MINIMUM_SIZE];
 
 
+
         static void BRANCH(int index) {
             if (!reachedBranch[index]) {
                 reachedBranch[index] = true;
@@ -182,8 +183,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             T value = this.array[nodeIndex];
             if (value==null){
                 return; 
-            }
-                
+            }  
 
             while (nodeIndex >= 0) {
                 int parentIndex = getParentIndex(nodeIndex);
@@ -211,6 +211,9 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                 BRANCH(0);
                 return;
             }
+            else{
+                BRANCH(1);
+            }
                 
             int leftIndex = getLeftIndex(index);
             int rightIndex = getRightIndex(index);
@@ -219,9 +222,12 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             T right = (rightIndex != Integer.MIN_VALUE && rightIndex < this.size) ? this.array[rightIndex] : null;
 
             if (left == null && right == null) {
-                BRANCH(1);
+                BRANCH(2);
                 // Nothing to do here
                 return;
+            }
+            else{
+                BRANCH(3);
             }
 
             T nodeToMove = null;
@@ -229,55 +235,56 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             if ((type == Type.MIN && left != null && right != null && value.compareTo(left) > 0 && value.compareTo(right) > 0)
                 || (type == Type.MAX && left != null && right != null && value.compareTo(left) < 0 && value.compareTo(right) < 0)) {
                 // Both children are greater/lesser than node
-                BRANCH(2);
+                BRANCH(4);
                 if ((right!=null) && 
                     ((type == Type.MIN && (right.compareTo(left) < 0)) || ((type == Type.MAX && right.compareTo(left) > 0)))
                 ) {
-                    BRANCH(3);
+                    BRANCH(5);
                     // Right is greater/lesser than left
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
                 } else if ((left!=null) && 
                            ((type == Type.MIN && left.compareTo(right) < 0) || (type == Type.MAX && left.compareTo(right) > 0))
                 ) {
-                    BRANCH(4);
+                    BRANCH(6);
                     // Left is greater/lesser than right
                     nodeToMove = left;
                     nodeToMoveIndex = leftIndex;
                 } else {
                     // Both children are equal, use right
-                    BRANCH(5);
+                    BRANCH(7);
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
                 }
             } else if ((type == Type.MIN && right != null && value.compareTo(right) > 0)
                        || (type == Type.MAX && right != null && value.compareTo(right) < 0)
             ) {
-                BRANCH(6);
+                BRANCH(8);
                 // Right is greater/lesser than node
                 nodeToMove = right;
                 nodeToMoveIndex = rightIndex;
             } else if ((type == Type.MIN && left != null && value.compareTo(left) > 0)
                        || (type == Type.MAX && left != null && value.compareTo(left) < 0)
             ) {
-                BRANCH(7);
+                BRANCH(9);
                 // Left is greater/lesser than node
                 nodeToMove = left;
                 nodeToMoveIndex = leftIndex;
             }
             // No node to move, stop recursion
             if (nodeToMove == null){
-                BRANCH(8);
+                BRANCH(10);
                 return;
             }
             else{
-            BRANCH(9);
+            BRANCH(11);
+            }
             // Re-factor heap sub-tree
             this.array[nodeToMoveIndex] = value;
             this.array[index] = nodeToMove;
 
             heapDown(nodeToMoveIndex);
-            }
+            
         }
 
         // Grow the array by 50%

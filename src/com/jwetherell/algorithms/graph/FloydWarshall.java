@@ -24,7 +24,6 @@ public class FloydWarshall {
                 reachedBranch[index] = true;
                 System.out.println("--------------");
                 System.out.println("FloydWarshall.getAllPairsShortestPaths\n");
-                //System.out.println("--------------");
                 for (int i = 0; i < reachedBranch.length; i++) {
                     if (reachedBranch[i]) {
                         System.out.println("REACHED BRANCH #" + i);
