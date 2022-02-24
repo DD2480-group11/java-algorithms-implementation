@@ -177,13 +177,13 @@ public class Multiplication {
         boolean aIsNegative = false;
         ArrayList<Integer> first = new ArrayList<Integer>();
         for (char n : a.toCharArray()){
-            BRANCH(1,name);
+            BRANCH(1+100,name);
             if (n=='-') {
-                BRANCH(2,name);
+                BRANCH(2+100,name+"broken");
                 aIsNegative = true;
                 continue;
             }else{
-                BRANCH(3,name);
+                BRANCH(3+100,name);
             }
             first.add(n-'0');
         }
@@ -191,13 +191,13 @@ public class Multiplication {
         boolean bIsNegative = false;
         ArrayList<Integer> second = new ArrayList<Integer>();
         for (char n : b.toCharArray()){
-            BRANCH(4,name);
+            BRANCH(4+100,name);
             if (n=='-') {
-                BRANCH(5,name);
+                BRANCH(5+100,name);
                 bIsNegative = true;
                 continue;
             }else{
-                BRANCH(6,name);
+                BRANCH(6+100,name);
             }
             second.add(n-'0');
         }
@@ -207,10 +207,10 @@ public class Multiplication {
 
         ArrayList<Integer> res = new ArrayList<Integer>(Collections.nCopies(first.size()+second.size(), 0));
         for (i=0;i<=lim1;i++) {
-            BRANCH(7,name);
+            BRANCH(7+100,name);
             k=i;
             for (j=0;j<=lim2;j++) {
-                BRANCH(8,name);
+                BRANCH(8+100,name);
                 int f = first.get(i);
                 int s = second.get(j);
                 mul=f*s;
@@ -221,42 +221,42 @@ public class Multiplication {
         }
 
         for (i=(lim1+lim2)+1;i>=0;i--) {
-            BRANCH(9,name);
+            BRANCH(9+100,name);
             if (flag==1){
-                BRANCH(10,name);
+                BRANCH(10+100,name);
                 res.set(i,res.get(i)+carry);
                 flag=0;
             }else{
-                BRANCH(11,name);
+                BRANCH(11+100,name);
             }
 
             if (res.get(i)>=10 && i!=0) {
-                BRANCH(12, name);
+                BRANCH(12+100, name);
                 rem=res.get(i)%10;
                 carry=res.get(i)/10;
                 res.set(i,rem);
                 flag++;
             }else{
-                BRANCH(13,name);
+                BRANCH(13+100,name);
             }
         }
 
         StringBuilder sb = new StringBuilder();
         if (aIsNegative ^ bIsNegative){
-            BRANCH(14,name);
+            BRANCH(14+100,name);
             sb.append('-');
         }else{
-            BRANCH(15,name);
+            BRANCH(15+100,name);
         }
 
         boolean zeroCheck = true;
         for (Integer s : res) {
-            BRANCH(16,name);
+            BRANCH(16+100,name);
             if (zeroCheck && s.equals(0)){
                 BRANCH(17,name);
                 continue;
             }else{
-                BRANCH(18,name);
+                BRANCH(18+100,name);
             }
 
             zeroCheck = false;
