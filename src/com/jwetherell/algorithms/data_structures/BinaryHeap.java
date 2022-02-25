@@ -6,12 +6,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-
 import com.jwetherell.algorithms.data_structures.interfaces.IHeap;
-
-
-
-
 
 /**
  * A binary heap is a heap data structure created using a binary tree. It can be
@@ -52,25 +47,10 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
     public static class BinaryHeapArray<T extends Comparable<T>> implements BinaryHeap<T> {
 
         private static final int MINIMUM_SIZE = 1024;
-        static boolean[] reachedBranch = new boolean[100];
 
         private Type type = Type.MIN;
         private int size = 0;
         private T[] array = (T[]) new Comparable[MINIMUM_SIZE];
-
-
-        static void BRANCH(int index) {
-            if (!reachedBranch[index]) {
-                reachedBranch[index] = true;
-                System.out.println("--------------");
-                System.out.println("BinaryHeapArray.heapDown\n");
-                for (int i = 0; i < reachedBranch.length; i++) {
-                    if (reachedBranch[i]) {
-                        System.out.println("REACHED BRANCH #" + i);
-                    }
-                }
-            }
-        }
 
         /**
          * Get the parent index of this index, will return Integer.MIN_VALUE if
@@ -180,10 +160,8 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         protected void heapUp(int idx) {
             int nodeIndex = idx;
             T value = this.array[nodeIndex];
-            if (value==null){
-                return; 
-            }
-                
+            if (value==null)
+                return;
 
             while (nodeIndex >= 0) {
                 int parentIndex = getParentIndex(nodeIndex);
@@ -207,19 +185,15 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
 
         protected void heapDown(int index) {
             T value = this.array[index];
-            if (value==null){
-                BRANCH(0);
+            if (value==null)
                 return;
-            }
-                
+
             int leftIndex = getLeftIndex(index);
             int rightIndex = getRightIndex(index);
             T left = (leftIndex != Integer.MIN_VALUE && leftIndex < this.size) ? this.array[leftIndex] : null;
-
             T right = (rightIndex != Integer.MIN_VALUE && rightIndex < this.size) ? this.array[rightIndex] : null;
 
             if (left == null && right == null) {
-                BRANCH(1);
                 // Nothing to do here
                 return;
             }
@@ -229,55 +203,45 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             if ((type == Type.MIN && left != null && right != null && value.compareTo(left) > 0 && value.compareTo(right) > 0)
                 || (type == Type.MAX && left != null && right != null && value.compareTo(left) < 0 && value.compareTo(right) < 0)) {
                 // Both children are greater/lesser than node
-                BRANCH(2);
                 if ((right!=null) && 
                     ((type == Type.MIN && (right.compareTo(left) < 0)) || ((type == Type.MAX && right.compareTo(left) > 0)))
                 ) {
-                    BRANCH(3);
                     // Right is greater/lesser than left
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
                 } else if ((left!=null) && 
                            ((type == Type.MIN && left.compareTo(right) < 0) || (type == Type.MAX && left.compareTo(right) > 0))
                 ) {
-                    BRANCH(4);
                     // Left is greater/lesser than right
                     nodeToMove = left;
                     nodeToMoveIndex = leftIndex;
                 } else {
                     // Both children are equal, use right
-                    BRANCH(5);
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
                 }
             } else if ((type == Type.MIN && right != null && value.compareTo(right) > 0)
                        || (type == Type.MAX && right != null && value.compareTo(right) < 0)
             ) {
-                BRANCH(6);
                 // Right is greater/lesser than node
                 nodeToMove = right;
                 nodeToMoveIndex = rightIndex;
             } else if ((type == Type.MIN && left != null && value.compareTo(left) > 0)
                        || (type == Type.MAX && left != null && value.compareTo(left) < 0)
             ) {
-                BRANCH(7);
                 // Left is greater/lesser than node
                 nodeToMove = left;
                 nodeToMoveIndex = leftIndex;
             }
             // No node to move, stop recursion
-            if (nodeToMove == null){
-                BRANCH(8);
+            if (nodeToMove == null)
                 return;
-            }
-            else{
-            BRANCH(9);
+
             // Re-factor heap sub-tree
             this.array[nodeToMoveIndex] = value;
             this.array[index] = nodeToMove;
 
             heapDown(nodeToMoveIndex);
-            }
         }
 
         // Grow the array by 50%
@@ -463,7 +427,6 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             size = 0;
         }
 
-        
         /**
          * Constructor for heap.
          * 

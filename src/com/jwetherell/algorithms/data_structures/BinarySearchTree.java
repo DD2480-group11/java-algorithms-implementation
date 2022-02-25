@@ -12,7 +12,6 @@ import java.util.Set;
 
 import com.jwetherell.algorithms.data_structures.interfaces.ITree;
 
-
 /**
  * A binary search tree (BST), which may sometimes also be called an ordered or
  * sorted binary tree, is a node-based binary tree data structure which has the
@@ -27,8 +26,6 @@ import com.jwetherell.algorithms.data_structures.interfaces.ITree;
  */
 @SuppressWarnings("unchecked")
 public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
-
-    static boolean[] reachedBranch = new boolean[100];
 
     private int modifications = 0;
 
@@ -353,7 +350,6 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
      */
     protected void replaceNodeWithNode(Node<T> nodeToRemoved, Node<T> replacementNode) {
         if (replacementNode != null) {
-            BRANCH(0);
             // Save for later
             Node<T> replacementNodeLesser = replacementNode.lesser;
             Node<T> replacementNodeGreater = replacementNode.greater;
@@ -361,56 +357,29 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
             // Replace replacementNode's branches with nodeToRemove's branches
             Node<T> nodeToRemoveLesser = nodeToRemoved.lesser;
             if (nodeToRemoveLesser != null && nodeToRemoveLesser != replacementNode) {
-                BRANCH(1);
                 replacementNode.lesser = nodeToRemoveLesser;
                 nodeToRemoveLesser.parent = replacementNode;
             }
-            else {
-                BRANCH(2);
-            }
             Node<T> nodeToRemoveGreater = nodeToRemoved.greater;
             if (nodeToRemoveGreater != null && nodeToRemoveGreater != replacementNode) {
-                BRANCH(3);
                 replacementNode.greater = nodeToRemoveGreater;
                 nodeToRemoveGreater.parent = replacementNode;
-            }
-            else {
-                BRANCH(4);
             }
 
             // Remove link from replacementNode's parent to replacement
             Node<T> replacementParent = replacementNode.parent;
             if (replacementParent != null && replacementParent != nodeToRemoved) {
-                BRANCH(5);
                 Node<T> replacementParentLesser = replacementParent.lesser;
                 Node<T> replacementParentGreater = replacementParent.greater;
                 if (replacementParentLesser != null && replacementParentLesser == replacementNode) {
-                    BRANCH(6);
                     replacementParent.lesser = replacementNodeGreater;
-                    if (replacementNodeGreater != null) {
-                        BRANCH(7);
+                    if (replacementNodeGreater != null)
                         replacementNodeGreater.parent = replacementParent;
-                    }
-                    else {
-                        BRANCH(8);
-                    }
                 } else if (replacementParentGreater != null && replacementParentGreater == replacementNode) {
-                    BRANCH(9);
                     replacementParent.greater = replacementNodeLesser;
-                    if (replacementNodeLesser != null) {
-                        BRANCH(10);
+                    if (replacementNodeLesser != null)
                         replacementNodeLesser.parent = replacementParent;
-                    }
-                    else {
-                        BRANCH(11);
-                    }
                 }
-                else {
-                    BRANCH(12);
-                }
-            }
-            else {
-                BRANCH(13);
             }
         }
 
@@ -418,55 +387,20 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         // replacementNode
         Node<T> parent = nodeToRemoved.parent;
         if (parent == null) {
-            BRANCH(14);
             // Replacing the root node
             root = replacementNode;
-            if (root != null) {
-                BRANCH(15);
+            if (root != null)
                 root.parent = null;
-            }
-            else {
-                BRANCH(16);
-            }
         } else if (parent.lesser != null && (parent.lesser.id.compareTo(nodeToRemoved.id) == 0)) {
-            BRANCH(17);
             parent.lesser = replacementNode;
-            if (replacementNode != null) {
-                BRANCH(18);
+            if (replacementNode != null)
                 replacementNode.parent = parent;
-            }
-            else {
-                BRANCH(19);
-            }
         } else if (parent.greater != null && (parent.greater.id.compareTo(nodeToRemoved.id) == 0)) {
-            BRANCH(20);
             parent.greater = replacementNode;
-            if (replacementNode != null) {
-                BRANCH(21);
+            if (replacementNode != null)
                 replacementNode.parent = parent;
-            }
-            else {
-                BRANCH(22);
-            }
         }
-        else {
-            BRANCH(23);
-        }
-        BRANCH(24);
         size--;
-    }
-
-    private void BRANCH(int index) {
-        if (!reachedBranch[index]) {
-            reachedBranch[index] = true;
-            System.out.println("--------------");
-            System.out.println("BinarySearchTree.replaceNodeWithNode\n");
-            for (int i = 0; i < reachedBranch.length; i++) {
-                if (reachedBranch[i]) {
-                    System.out.println("REACHED BRANCH #" + i);
-                }
-            }
-        }
     }
 
     /**
