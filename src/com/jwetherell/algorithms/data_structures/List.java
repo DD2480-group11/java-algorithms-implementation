@@ -14,7 +14,7 @@ import com.jwetherell.algorithms.data_structures.interfaces.IList;
  */
 @SuppressWarnings("unchecked")
 public abstract class List<T> implements IList<T> {
-    static boolean[] reachedBranch = new boolean[100];
+    static boolean[] reachedBranch = new boolean[1000];
 
     /**
      * A dynamic array, growable array, resizable array, dynamic table, or array
@@ -107,35 +107,35 @@ public abstract class List<T> implements IList<T> {
             String name = "remove";
             if (index<0 || index>=size) {
                 // This branch was not reached in the tests
-                BRANCH(0,name);
+                BRANCH(0+100,name);
                 return null;
             }
             else {
-                BRANCH(1,name);
+                BRANCH(1+100,name);
             }
 
             T t = array[index];
             if (index != --size) {
-                BRANCH(2,name);
+                BRANCH(2+100,name);
                 // Shift the array down one spot
                 System.arraycopy(array, index + 1, array, index, size - index);
             }
             else {
-                BRANCH(3,name);
+                BRANCH(3+100,name);
             }
             array[size] = null;
 
             int shrinkSize = array.length>>1;
             if (shrinkSize >= MINIMUM_SIZE && size < shrinkSize) {
                 // This branch was not reached in the tests
-                BRANCH(4,name);
+                BRANCH(4+100,name);
                 shrink();
             }
             else {
-                BRANCH(5,name);
+                BRANCH(5+100,name);
             }
 
-            BRANCH(6,name);
+            BRANCH(6+100,name);
 
             return t;
         }
@@ -143,7 +143,7 @@ public abstract class List<T> implements IList<T> {
         // Grow the array by 50%
         private void grow() {
             String name = "grow";
-            BRANCH(0,name);
+            BRANCH(0+200,name);
             int growSize = size + (size<<1);
             array = Arrays.copyOf(array, growSize);
         }
@@ -151,7 +151,7 @@ public abstract class List<T> implements IList<T> {
         // Shrink the array by 50%
         private void shrink() {
             String name = "shrink";
-            BRANCH(0,name);
+            BRANCH(0+300,name);
             int shrinkSize = array.length>>1;
             array = Arrays.copyOf(array, shrinkSize);
         }
@@ -217,25 +217,25 @@ public abstract class List<T> implements IList<T> {
             String name = "validate";
             int localSize = 0;
             for (int i=0; i<array.length; i++) {
-                BRANCH(0, name);
+                BRANCH(0+400, name);
                 T t = array[i];
                 if (i<size) {
-                    BRANCH(1, name);
+                    BRANCH(1+400, name);
                     if (t==null) {
                         // This branch is not reached in the tests
-                        BRANCH(2, name);
+                        BRANCH(2+400, name);
                         return false;
                     }
                     else {
-                        BRANCH(3, name);
+                        BRANCH(3+400, name);
                     }
                     localSize++;
                 } else {
-                    BRANCH(4, name);
+                    BRANCH(4+400, name);
                     if (t!=null) return false;
                 }
             }
-            BRANCH(5, name);
+            BRANCH(5+400, name);
             return (localSize==size);
         }
 
