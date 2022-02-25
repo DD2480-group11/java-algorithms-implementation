@@ -24,7 +24,6 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     protected static final boolean BLACK = false;
     protected static final boolean RED = true;
-    static boolean[] reachedBranch = new boolean[100];
 
     /**
      * Default constructor.
@@ -46,19 +45,6 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
      */
     public RedBlackTree(INodeCreator<T> creator) {
         super(creator);
-    }
-
-    private void BRANCH(int index) {
-        if (!reachedBranch[index]) {
-            reachedBranch[index] = true;
-            System.out.println("--------------");
-            System.out.println("RedBlackTree.balanceAfterDelete\n");
-            for (int i = 0; i < reachedBranch.length; i++) {
-                if (reachedBranch[i]) {
-                    System.out.println("REACHED BRANCH #" + i);
-                }
-            }
-        }
     }
 
     /**
@@ -299,128 +285,101 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
      */
     private boolean balanceAfterDelete(RedBlackNode<T> node) {
         if (node.parent == null) {
-            BRANCH(1);
             // Case 1 - node is the new root.
             return true;
         }
-        else{
-            BRANCH(2);
-        }
-  
+
         RedBlackNode<T> parent = (RedBlackNode<T>) node.parent;
         RedBlackNode<T> sibling = node.getSibling();
         if (sibling.color == RED) {
-            BRANCH(3);
             // Case 2 - sibling is red.
             parent.color = RED;
             sibling.color = BLACK;
             if (node == parent.lesser) {
-                BRANCH(4);
                 rotateLeft(parent);
-  
+
                 // Rotation, need to update parent/sibling
                 parent = (RedBlackNode<T>) node.parent;
                 sibling = node.getSibling();
             } else if (node == parent.greater) {
-                BRANCH(5);
                 rotateRight(parent);
-  
+
                 // Rotation, need to update parent/sibling
                 parent = (RedBlackNode<T>) node.parent;
                 sibling = node.getSibling();
             } else {
-                BRANCH(6);
                 throw new RuntimeException("Yikes! I'm not related to my parent. " + node.toString());
             }
-        }else{
-            BRANCH(7);
         }
-  
-        if (parent.color == BLACK
-            && sibling.color == BLACK
+
+        if (parent.color == BLACK 
+            && sibling.color == BLACK 
             && ((RedBlackNode<T>) sibling.lesser).color == BLACK
             && ((RedBlackNode<T>) sibling.greater).color == BLACK
         ) {
-            BRANCH(8);
             // Case 3 - parent, sibling, and sibling's children are black.
             sibling.color = RED;
             return balanceAfterDelete(parent);
-        } else{
-            BRANCH(9);
-        }
-  
-        if (parent.color == RED
-            && sibling.color == BLACK
+        } 
+
+        if (parent.color == RED 
+            && sibling.color == BLACK 
             && ((RedBlackNode<T>) sibling.lesser).color == BLACK
             && ((RedBlackNode<T>) sibling.greater).color == BLACK
         ) {
-            BRANCH(10);
-  
             // Case 4 - sibling and sibling's children are black, but parent is red.
             sibling.color = RED;
             parent.color = BLACK;
             return true;
-        }else {
-            BRANCH(11);
         }
-  
+
         if (sibling.color == BLACK) {
-            BRANCH(12);
             // Case 5 - sibling is black, sibling's left child is red,
             // sibling's right child is black, and node is the left child of
             // its parent.
-            if (node == parent.lesser
+            if (node == parent.lesser 
                 && ((RedBlackNode<T>) sibling.lesser).color == RED
                 && ((RedBlackNode<T>) sibling.greater).color == BLACK
             ) {
-                BRANCH(13);
-  
                 sibling.color = RED;
                 ((RedBlackNode<T>) sibling.lesser).color = RED;
-  
+
                 rotateRight(sibling);
-  
+
                 // Rotation, need to update parent/sibling
                 parent = (RedBlackNode<T>) node.parent;
                 sibling = node.getSibling();
-            } else if (node == parent.greater
+            } else if (node == parent.greater 
                        && ((RedBlackNode<T>) sibling.lesser).color == BLACK
                        && ((RedBlackNode<T>) sibling.greater).color == RED
             ) {
-                BRANCH(14);
                 sibling.color = RED;
                 ((RedBlackNode<T>) sibling.greater).color = RED;
-  
+
                 rotateLeft(sibling);
-  
+
                 // Rotation, need to update parent/sibling
                 parent = (RedBlackNode<T>) node.parent;
                 sibling = node.getSibling();
             }
-        }else{
-            BRANCH(15);
         }
-  
+
         // Case 6 - sibling is black, sibling's right child is red, and node
         // is the left child of its parent.
         sibling.color = parent.color;
         parent.color = BLACK;
         if (node == parent.lesser) {
-            BRANCH(16);
             ((RedBlackNode<T>) sibling.greater).color = BLACK;
             rotateLeft(node.parent);
         } else if (node == parent.greater) {
-            BRANCH(17);
             ((RedBlackNode<T>) sibling.lesser).color = BLACK;
             rotateRight(node.parent);
         } else {
-            BRANCH(18);
             throw new RuntimeException("Yikes! I'm not related to my parent. " + node.toString());
         }
-  
+
         return true;
     }
- 
 
     /**
      * {@inheritDoc}
