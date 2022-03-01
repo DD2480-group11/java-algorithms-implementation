@@ -289,6 +289,20 @@ public class FenwickTree<D extends FenwickTree.Data> {
                 return this;
             }
 
+            static boolean[] reachedBranch = new boolean[1000];
+            private static void BRANCH(int index) {
+                if (!reachedBranch[index]) {
+                    reachedBranch[index] = true;
+                    System.out.println("--------------");
+                    System.out.println("FenwickTree\n");
+                    for (int i = 0; i < reachedBranch.length; i++) {
+                        if (reachedBranch[i]) {
+                            System.out.println("REACHED BRANCH #" + i);
+                        }
+                    }
+                }
+            }
+
             /**
              * Combined range sum data.
              * 
@@ -296,31 +310,45 @@ public class FenwickTree<D extends FenwickTree.Data> {
              *            resulted from combination.
              */
             private void combined(RangeSumData<N> data) {
-                if (this.sum == null && data.sum == null)
+                BRANCH(0);
+                if (this.sum == null && data.sum == null) {
+                    BRANCH(1);
                     return;
-                else if (this.sum != null && data.sum == null)
+                }
+                else if (this.sum != null && data.sum == null) {
+                    BRANCH(2);
                     return;
-                else if (this.sum == null && data.sum != null)
+                }
+                else if (this.sum == null && data.sum != null) {
+                    BRANCH(3);
                     this.sum = data.sum;
+                }
                 else {
+                    BRANCH(4);
                     /* TODO: This is ugly and how to handle number overflow? */
                     if (this.sum instanceof BigDecimal || data.sum instanceof BigDecimal) {
+                        BRANCH(5);
                         BigDecimal result = ((BigDecimal)this.sum).add((BigDecimal)data.sum);
                         this.sum = (N)result;
                     } else if (this.sum instanceof BigInteger || data.sum instanceof BigInteger) {
+                        BRANCH(6);
                         BigInteger result = ((BigInteger)this.sum).add((BigInteger)data.sum);
                         this.sum = (N)result;
                     } else if (this.sum instanceof Long || data.sum instanceof Long) {
+                        BRANCH(7);
                         Long result = (this.sum.longValue() + data.sum.longValue());
                         this.sum = (N)result;
                     } else if (this.sum instanceof Double || data.sum instanceof Double) {
+                        BRANCH(8);
                         Double result = (this.sum.doubleValue() + data.sum.doubleValue());
                         this.sum = (N)result;
                     } else if (this.sum instanceof Float || data.sum instanceof Float) {
+                        BRANCH(9);
                         Float result = (this.sum.floatValue() + data.sum.floatValue());
                         this.sum = (N)result;
                     } else {
                         // Integer
+                        BRANCH(10);
                         Integer result = (this.sum.intValue() + data.sum.intValue());
                         this.sum = (N)result;
                     }
@@ -334,31 +362,45 @@ public class FenwickTree<D extends FenwickTree.Data> {
              *            resulted from combination.
              */
             private void separate(RangeSumData<N> data) {
-                if (this.sum == null && data.sum == null)
+                BRANCH(0+100);
+                if (this.sum == null && data.sum == null) {
+                    BRANCH(1+100);
                     return;
-                else if (this.sum != null && data.sum == null)
+                }
+                else if (this.sum != null && data.sum == null) {
+                    BRANCH(2+100);
                     return;
-                else if (this.sum == null && data.sum != null)
+                }
+                else if (this.sum == null && data.sum != null) {
+                    BRANCH(3+100);
                     this.sum = data.sum;
+                }
                 else {
+                    BRANCH(4+100);
                     /* TODO: This is ugly and how to handle number overflow? */
                     if (this.sum instanceof BigDecimal || data.sum instanceof BigDecimal) {
+                        BRANCH(5+100);
                         BigDecimal result = ((BigDecimal)this.sum).subtract((BigDecimal)data.sum);
                         this.sum = (N)result;
                     } else if (this.sum instanceof BigInteger || data.sum instanceof BigInteger) {
+                        BRANCH(6+100);
                         BigInteger result = ((BigInteger)this.sum).subtract((BigInteger)data.sum);
                         this.sum = (N)result;
                     } else if (this.sum instanceof Long || data.sum instanceof Long) {
+                        BRANCH(7+100);
                         Long result = (this.sum.longValue() - data.sum.longValue());
                         this.sum = (N)result;
                     } else if (this.sum instanceof Double || data.sum instanceof Double) {
+                        BRANCH(8+100);
                         Double result = (this.sum.doubleValue() - data.sum.doubleValue());
                         this.sum = (N)result;
                     } else if (this.sum instanceof Float || data.sum instanceof Float) {
+                        BRANCH(9+100);
                         Float result = (this.sum.floatValue() - data.sum.floatValue());
                         this.sum = (N)result;
                     } else {
                         // Integer
+                        BRANCH(10+100);
                         Integer result = (this.sum.intValue() - data.sum.intValue());
                         this.sum = (N)result;
                     }
