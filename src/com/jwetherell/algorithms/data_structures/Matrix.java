@@ -19,39 +19,61 @@ public class Matrix<T extends Number> {
     private int cols = 0;
     private T[] matrix = null;
 
+    static boolean[] reachedBranch = new boolean[1000];
+    private static void BRANCH(int index) {
+        if (!reachedBranch[index]) {
+            reachedBranch[index] = true;
+            System.out.println("--------------");
+            System.out.println("Matrix\n");
+            for (int i = 0; i < reachedBranch.length; i++) {
+                if (reachedBranch[i]) {
+                    System.out.println("REACHED BRANCH #" + i);
+                }
+            }
+        }
+    }
+
     private final Comparator<T> comparator = new Comparator<T>() {
         /**
          * {@inheritDoc}
          */
         @Override
         public int compare(T o1, T o2) {
+            BRANCH(0);
             /* TODO: What if Java adds new numeric type? */
             int result = 0;
             if (o1 instanceof BigDecimal || o2 instanceof BigDecimal) {
+                BRANCH(1);
                 BigDecimal c1 = (BigDecimal)o1;
                 BigDecimal c2 = (BigDecimal)o2;
                 result = c1.compareTo(c2);
             } else if (o1 instanceof BigInteger || o2 instanceof BigInteger) {
+                BRANCH(2);
                 BigInteger c1 = (BigInteger)o1;
                 BigInteger c2 = (BigInteger)o2;
                 result = c1.compareTo(c2);
             } else if (o1 instanceof Long || o2 instanceof Long) {
+                BRANCH(3);
                 Long c1 = o1.longValue();
                 Long c2 = o2.longValue();
                 result = c1.compareTo(c2);
             } else if (o1 instanceof Double || o2 instanceof Double) {
+                BRANCH(4);
                 Double c1 = o1.doubleValue();
                 Double c2 = o2.doubleValue();
                 result = c1.compareTo(c2);
             } else if (o1 instanceof Float || o2 instanceof Float) {
+                BRANCH(5);
                 Float c1 = o1.floatValue();
                 Float c2 = o2.floatValue();
                 result = c1.compareTo(c2);
             } else {
+                BRANCH(6);
                 Integer c1 = o1.intValue();
                 Integer c2 = o2.intValue();
                 result = c1.compareTo(c2);
             }
+            BRANCH(7);
             return result;
         }
     };
@@ -157,32 +179,44 @@ public class Matrix<T extends Number> {
     }
 
     public Matrix<T> add(Matrix<T> input) {
+        BRANCH(0+100);
         Matrix<T> output = new Matrix<T>(this.rows, this.cols);
-        if ((this.cols != input.cols) || (this.rows != input.rows))
+        if ((this.cols != input.cols) || (this.rows != input.rows)) {
+            BRANCH(1+100);
             return output;
+        }
         for (int r = 0; r < output.rows; r++) {
+            BRANCH(2+100);
             for (int c = 0; c < output.cols; c++) {
+                BRANCH(3+100);
                 for (int i = 0; i < cols; i++) {
+                    BRANCH(4+100);
                     T m1 = this.get(r, c);
                     T m2 = input.get(r, c);
                     T result;
                     /* TODO: This is ugly and how to handle number overflow? */
                     if (m1 instanceof BigDecimal || m2 instanceof BigDecimal) {
+                        BRANCH(5+100);
                         BigDecimal result2 = ((BigDecimal)m1).add((BigDecimal)m2);
                         result = (T)result2;
                     } else if (m1 instanceof BigInteger || m2 instanceof BigInteger) {
+                        BRANCH(6+100);
                         BigInteger result2 = ((BigInteger)m1).add((BigInteger)m2);
                         result = (T)result2;
                     } else if (m1 instanceof Long || m2 instanceof Long) {
+                        BRANCH(7+100);
                         Long result2 = (m1.longValue() + m2.longValue());
                         result = (T)result2;
                     } else if (m1 instanceof Double || m2 instanceof Double) {
+                        BRANCH(8+100);
                         Double result2 = (m1.doubleValue() + m2.doubleValue());
                         result = (T)result2;
                     } else if (m1 instanceof Float || m2 instanceof Float) {
+                        BRANCH(9+100);
                         Float result2 = (m1.floatValue() + m2.floatValue());
                         result = (T)result2;
                     } else {
+                        BRANCH(10+100);
                         // Integer
                         Integer result2 = (m1.intValue() + m2.intValue());
                         result = (T)result2;
@@ -191,37 +225,50 @@ public class Matrix<T extends Number> {
                 }
             }
         }
+        BRANCH(11+100);
         return output;
     }
 
     public Matrix<T> subtract(Matrix<T> input) {
+        BRANCH(0+200);
         Matrix<T> output = new Matrix<T>(this.rows, this.cols);
-        if ((this.cols != input.cols) || (this.rows != input.rows))
+        if ((this.cols != input.cols) || (this.rows != input.rows)) {
+            BRANCH(1);
             return output;
+        }
 
         for (int r = 0; r < output.rows; r++) {
+            BRANCH(2+200);
             for (int c = 0; c < output.cols; c++) {
+                BRANCH(3+200);
                 for (int i = 0; i < cols; i++) {
+                    BRANCH(4+200);
                     T m1 = this.get(r, c);
                     T m2 = input.get(r, c);
                     T result;
                     /* TODO: This is ugly and how to handle number overflow? */
                     if (m1 instanceof BigDecimal || m2 instanceof BigDecimal) {
+                        BRANCH(5+200);
                         BigDecimal result2 = ((BigDecimal)m1).subtract((BigDecimal)m2);
                         result = (T)result2;
                     } else if (m1 instanceof BigInteger || m2 instanceof BigInteger) {
+                        BRANCH(6+200);
                         BigInteger result2 = ((BigInteger)m1).subtract((BigInteger)m2);
                         result = (T)result2;
                     } else if (m1 instanceof Long || m2 instanceof Long) {
+                        BRANCH(7+200);
                         Long result2 = (m1.longValue() - m2.longValue());
                         result = (T)result2;
                     } else if (m1 instanceof Double || m2 instanceof Double) {
+                        BRANCH(8+200);
                         Double result2 = (m1.doubleValue() - m2.doubleValue());
                         result = (T)result2;
                     } else if (m1 instanceof Float || m2 instanceof Float) {
+                        BRANCH(9+200);
                         Float result2 = (m1.floatValue() - m2.floatValue());
                         result = (T)result2;
                     } else {
+                        BRANCH(10+200);
                         // Integer
                         Integer result2 = (m1.intValue() - m2.intValue());
                         result = (T)result2;
@@ -230,23 +277,31 @@ public class Matrix<T extends Number> {
                 }
             }
         }
+        BRANCH(11+200);
         return output;
     }
 
     public Matrix<T> multiply(Matrix<T> input) {
+        BRANCH(0+300);
         Matrix<T> output = new Matrix<T>(this.rows, input.cols);
-        if (this.cols != input.rows)
+        if (this.cols != input.rows) {
+            BRANCH(1+300);
             return output;
+        }
 
         for (int r = 0; r < output.rows; r++) {
+            BRANCH(2+300);
             for (int c = 0; c < output.cols; c++) {
+                BRANCH(3+300);
                 T[] row = getRow(r);
                 T[] column = input.getColumn(c);
                 T test = row[0];
                 /* TODO: This is ugly and how to handle number overflow? */
                 if (test instanceof BigDecimal) {
+                    BRANCH(4+300);
                     BigDecimal result = BigDecimal.ZERO;
                     for (int i = 0; i < cols; i++) {
+                        BRANCH(5+300);
                         T m1 = row[i];
                         T m2 = column[i];
 
@@ -255,8 +310,10 @@ public class Matrix<T extends Number> {
                     }
                     output.set(r, c, (T)result);
                 } else if (test instanceof BigInteger) {
+                    BRANCH(6+300);
                     BigInteger result = BigInteger.ZERO;
                     for (int i = 0; i < cols; i++) {
+                        BRANCH(7+300);
                         T m1 = row[i];
                         T m2 = column[i];
 
@@ -265,8 +322,10 @@ public class Matrix<T extends Number> {
                     }
                     output.set(r, c, (T)result);
                 } else if (test instanceof Long) {
+                    BRANCH(8+300);
                     Long result = 0l;
                     for (int i = 0; i < cols; i++) {
+                        BRANCH(9+300);
                         T m1 = row[i];
                         T m2 = column[i];
 
@@ -275,8 +334,10 @@ public class Matrix<T extends Number> {
                     }
                     output.set(r, c, (T)result);
                 } else if (test instanceof Double) {
+                    BRANCH(10+300);
                     Double result = 0d;
                     for (int i = 0; i < cols; i++) {
+                        BRANCH(11);
                         T m1 = row[i];
                         T m2 = column[i];
 
@@ -285,6 +346,7 @@ public class Matrix<T extends Number> {
                     }
                     output.set(r, c, (T)result);
                 } else if (test instanceof Float) {
+                    BRANCH(12+300);
                     Float result = 0f;
                     for (int i = 0; i < cols; i++) {
                         T m1 = row[i];
@@ -295,6 +357,7 @@ public class Matrix<T extends Number> {
                     }
                     output.set(r, c, (T)result);
                 } else {
+                    BRANCH(13+300);
                     // Integer
                     Integer result = 0;
                     for (int i = 0; i < cols; i++) {
@@ -308,6 +371,7 @@ public class Matrix<T extends Number> {
                 }
             }
         }
+        BRANCH(14+300);
         return output;
     }
 
