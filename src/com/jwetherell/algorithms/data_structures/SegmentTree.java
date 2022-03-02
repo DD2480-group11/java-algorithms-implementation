@@ -30,6 +30,20 @@ import java.util.TreeSet;
 @SuppressWarnings("unchecked")
 public abstract class SegmentTree<D extends SegmentTree.Data> {
 
+    static boolean[] reachedBranch = new boolean[1000];
+    private static void BRANCH(int index) {
+        if (!reachedBranch[index]) {
+            reachedBranch[index] = true;
+            System.out.println("--------------");
+            System.out.println("SegmentTree\n");
+            for (int i = 0; i < reachedBranch.length; i++) {
+                if (reachedBranch[i]) {
+                    System.out.println("REACHED BRANCH #" + i);
+                }
+            }
+        }
+    }
+
     protected Segment<D> root = null;
 
     /**
@@ -333,35 +347,62 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
             }
 
             private void combined(RangeMaximumData<N> data) {
-                if (this.maximum == null && data.maximum == null)
+                BRANCH(0);
+                if (this.maximum == null && data.maximum == null) {
+                    BRANCH(1);
                     return;
-                else if (this.maximum != null && data.maximum == null)
+                }
+                else if (this.maximum != null && data.maximum == null) {
+                    BRANCH(2);
                     return;
-                else if (this.maximum == null && data.maximum != null)
+                }
+                else if (this.maximum == null && data.maximum != null) {
+                    BRANCH(3);
                     this.maximum = data.maximum;
+                }
                 else {
+                    BRANCH(4);
                     /* TODO: This is ugly */
                     if (this.maximum instanceof BigDecimal || data.maximum instanceof BigDecimal) {
-                        if (((BigDecimal)data.maximum).compareTo(((BigDecimal)this.maximum))==1)
-                            this.maximum = data.maximum;
+                    BRANCH(5);
+                    if (((BigDecimal)data.maximum).compareTo(((BigDecimal)this.maximum))==1) {
+                        BRANCH(6);
+                        this.maximum = data.maximum;
+                    }
                     } else if (this.maximum instanceof BigInteger || data.maximum instanceof BigInteger) {
-                        if (((BigInteger)data.maximum).compareTo(((BigInteger)this.maximum))==1)
+                        BRANCH(7);
+                        if (((BigInteger)data.maximum).compareTo(((BigInteger)this.maximum))==1) {
+                            BRANCH(8);
                             this.maximum = data.maximum;
+                        }
                     } else if (this.maximum instanceof Long || data.maximum instanceof Long) {
-                        if (((Long)data.maximum).compareTo(((Long)this.maximum))==1)
+                        BRANCH(9);
+                        if (((Long)data.maximum).compareTo(((Long)this.maximum))==1) {
+                            BRANCH(10);
                             this.maximum = data.maximum;
+                        }
                     } else if (this.maximum instanceof Double || data.maximum instanceof Double) {
-                        if (((Double)data.maximum).compareTo(((Double)this.maximum))==1)
+                        BRANCH(11);
+                        if (((Double)data.maximum).compareTo(((Double)this.maximum))==1) {
+                            BRANCH(12);
                             this.maximum = data.maximum;
+                        }
                     } else if (this.maximum instanceof Float || data.maximum instanceof Float) {
-                        if (((Float)data.maximum).compareTo(((Float)this.maximum))==1)
+                        BRANCH(13);
+                        if (((Float)data.maximum).compareTo(((Float)this.maximum))==1) {
+                            BRANCH(14);
                             this.maximum = data.maximum;
+                        }
                     } else {
+                        BRANCH(15);
                         // Integer
-                        if (((Integer)data.maximum).compareTo(((Integer)this.maximum))==1)
+                        if (((Integer)data.maximum).compareTo(((Integer)this.maximum))==1) {
+                            BRANCH(16);
                             this.maximum = data.maximum;
+                        }
                     }
                 }
+                BRANCH(17);
             }
 
             /**
@@ -464,35 +505,62 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
             }
 
             private void combined(RangeMinimumData<N> data) {
-                if (this.minimum == null && data.minimum == null)
+                BRANCH(0+100);
+                if (this.minimum == null && data.minimum == null) {
+                    BRANCH(1+100);
                     return;
-                else if (this.minimum != null && data.minimum == null)
+                }
+                else if (this.minimum != null && data.minimum == null) {
+                    BRANCH(2+100);
                     return;
-                else if (this.minimum == null && data.minimum != null)
+                }
+                else if (this.minimum == null && data.minimum != null) {
+                    BRANCH(3+100);
                     this.minimum = data.minimum;
+                }
                 else {
+                    BRANCH(4+100);
                     /* TODO: This is ugly */
                     if (this.minimum instanceof BigDecimal || data.minimum instanceof BigDecimal) {
-                        if (((BigDecimal)data.minimum).compareTo(((BigDecimal)this.minimum))==-1)
+                        BRANCH(5+100);
+                        if (((BigDecimal)data.minimum).compareTo(((BigDecimal)this.minimum))==-1) {
+                            BRANCH(6+100);
                             this.minimum = data.minimum;
+                        }
                     } else if (this.minimum instanceof BigInteger || data.minimum instanceof BigInteger) {
-                        if (((BigInteger)data.minimum).compareTo(((BigInteger)this.minimum))==-1)
+                        BRANCH(7+100);
+                        if (((BigInteger)data.minimum).compareTo(((BigInteger)this.minimum))==-1) {
+                            BRANCH(8+100);
                             this.minimum = data.minimum;
+                        }
                     } else if (this.minimum instanceof Long || data.minimum instanceof Long) {
-                        if (((Long)data.minimum).compareTo(((Long)this.minimum))==-1)
+                        BRANCH(9+100);
+                        if (((Long)data.minimum).compareTo(((Long)this.minimum))==-1) {
+                            BRANCH(10+100);
                             this.minimum = data.minimum;
+                        }
                     } else if (this.minimum instanceof Double || data.minimum instanceof Double) {
-                        if (((Double)data.minimum).compareTo(((Double)this.minimum))==-1)
+                        BRANCH(11+100);
+                        if (((Double)data.minimum).compareTo(((Double)this.minimum))==-1) {
+                            BRANCH(12+100);
                             this.minimum = data.minimum;
+                        }
                     } else if (this.minimum instanceof Float || data.minimum instanceof Float) {
-                        if (((Float)data.minimum).compareTo(((Float)this.minimum))==-1)
+                        BRANCH(13+100);
+                        if (((Float)data.minimum).compareTo(((Float)this.minimum))==-1) {
+                            BRANCH(14+100);
                             this.minimum = data.minimum;
+                        }
                     } else {
+                        BRANCH(15+100);
                         // Integer
-                        if (((Integer)data.minimum).compareTo(((Integer)this.minimum))==-1)
+                        if (((Integer)data.minimum).compareTo(((Integer)this.minimum))==-1) {
+                            BRANCH(16+100);
                             this.minimum = data.minimum;
+                        }
                     }
                 }
+                BRANCH(17+100);
             }
 
             /**
@@ -596,35 +664,50 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
             }
 
             private void combined(RangeSumData<N> data) {
-                if (this.sum == null && data.sum == null)
+                BRANCH(0+200);
+                if (this.sum == null && data.sum == null) {
+                    BRANCH(1+200);
                     return;
-                else if (this.sum != null && data.sum == null)
+                }
+                else if (this.sum != null && data.sum == null) {
+                    BRANCH(2+200);
                     return;
-                else if (this.sum == null && data.sum != null)
+                }
+                else if (this.sum == null && data.sum != null) {
+                    BRANCH(3+200);
                     this.sum = data.sum;
+                }
                 else {
+                    BRANCH(4+200);
                     /* TODO: This is ugly and how to handle number overflow? */
                     if (this.sum instanceof BigDecimal || data.sum instanceof BigDecimal) {
+                        BRANCH(5+200);
                         BigDecimal result = ((BigDecimal)this.sum).add((BigDecimal)data.sum);
                         this.sum = (N)result;
                     } else if (this.sum instanceof BigInteger || data.sum instanceof BigInteger) {
+                        BRANCH(6+200);
                         BigInteger result = ((BigInteger)this.sum).add((BigInteger)data.sum);
                         this.sum = (N)result;
                     } else if (this.sum instanceof Long || data.sum instanceof Long) {
+                        BRANCH(7+200);
                         Long result = (this.sum.longValue() + data.sum.longValue());
                         this.sum = (N)result;
                     } else if (this.sum instanceof Double || data.sum instanceof Double) {
+                        BRANCH(8+200);
                         Double result = (this.sum.doubleValue() + data.sum.doubleValue());
                         this.sum = (N)result;
                     } else if (this.sum instanceof Float || data.sum instanceof Float) {
+                        BRANCH(9+200);
                         Float result = (this.sum.floatValue() + data.sum.floatValue());
                         this.sum = (N)result;
                     } else {
+                        BRANCH(10+200);
                         // Integer
                         Integer result = (this.sum.intValue() + data.sum.intValue());
                         this.sum = (N)result;
                     }
                 }
+                BRANCH(11+200);
             }
 
             /**
