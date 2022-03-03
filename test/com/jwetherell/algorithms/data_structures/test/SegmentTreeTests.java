@@ -15,6 +15,8 @@ import com.jwetherell.algorithms.data_structures.SegmentTree.Data;
 import com.jwetherell.algorithms.data_structures.SegmentTree.DynamicSegmentTree;
 import com.jwetherell.algorithms.data_structures.SegmentTree.FlatSegmentTree;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 public class SegmentTreeTests {
 
     @Test
@@ -167,6 +169,306 @@ public class SegmentTreeTests {
             // min is last
             query = tree.query(1, 4);
             assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum==1);
+        }
+
+        query = tree.query(7); // stabbing
+        assertTrue("Segment tree query error. query=7 result="+query, tree, query.minimum==null);
+    }
+
+    /*
+    Requirement:
+    
+
+    */
+    @Test
+    public void testRangeMinSegmentTreeBigInteger() {
+        java.util.List<SegmentTree.Data.RangeMinimumData<BigInteger>> segments = new ArrayList<SegmentTree.Data.RangeMinimumData<BigInteger>>();
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(0,  BigInteger.valueOf(4)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(1,  BigInteger.valueOf(2)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(2,  BigInteger.valueOf(6)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(3,  BigInteger.valueOf(3)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(4,  BigInteger.valueOf(1)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(5,  BigInteger.valueOf(5)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(6,  BigInteger.valueOf(0)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigInteger>(17, BigInteger.valueOf(7)));    
+
+        // No matter which order the data is given, all tests should pass
+
+        // Initial order.
+        testRangeMinSegmentTreeBigInteger(segments);
+
+        // Randomize it
+        Collections.shuffle(segments);
+        testRangeMinSegmentTreeBigInteger(segments);
+
+        // Try in order
+        Collections.sort(segments);
+        testRangeMinSegmentTreeBigInteger(segments);
+
+        // Try reverse order
+        Collections.sort(segments,REVERSE);
+        testRangeMinSegmentTreeBigInteger(segments);
+    }
+
+    private void testRangeMinSegmentTreeBigInteger(java.util.List<SegmentTree.Data.RangeMinimumData<BigInteger>> segments) {   // Range Minimum Segment tree
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<BigInteger>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<BigInteger>>(segments, 5);
+
+        SegmentTree.Data.RangeMinimumData<BigInteger> query = tree.query(0, 7);
+        assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.minimum==BigInteger.valueOf(0));
+
+        query = tree.query(0, 17);
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.minimum==BigInteger.valueOf(0));
+
+        // bounds checking
+        {
+            // min is first
+            query = tree.query(1, 3);
+            assertTrue("Segment tree query error. query=1->3 result="+query, tree, query.minimum==BigInteger.valueOf(2));
+
+            // min is middle
+            query = tree.query(3, 5);
+            assertTrue("Segment tree query error. query=3->5 result="+query, tree, query.minimum==BigInteger.valueOf(1));
+
+            // min is last
+            query = tree.query(1, 4);
+            assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum==BigInteger.valueOf(1));
+        }
+
+        query = tree.query(7); // stabbing
+        assertTrue("Segment tree query error. query=7 result="+query, tree, query.minimum==null);
+    }
+
+    /*
+    Requirement:
+    
+
+    */
+    @Test
+    public void testRangeMinSegmentTreeBigDecimal() {
+        java.util.List<SegmentTree.Data.RangeMinimumData<BigDecimal>> segments = new ArrayList<SegmentTree.Data.RangeMinimumData<BigDecimal>>();
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(0,  BigDecimal.valueOf(4)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(1,  BigDecimal.valueOf(2)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(2,  BigDecimal.valueOf(6)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(3,  BigDecimal.valueOf(3)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(4,  BigDecimal.valueOf(1)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(5,  BigDecimal.valueOf(5)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(6,  BigDecimal.valueOf(0)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<BigDecimal>(17, BigDecimal.valueOf(7)));    
+
+        // No matter which order the data is given, all tests should pass
+
+        // Initial order.
+        testRangeMinSegmentTreeBigDecimal(segments);
+
+        // Randomize it
+        Collections.shuffle(segments);
+        testRangeMinSegmentTreeBigDecimal(segments);
+
+        // Try in order
+        Collections.sort(segments);
+        testRangeMinSegmentTreeBigDecimal(segments);
+
+        // Try reverse order
+        Collections.sort(segments,REVERSE);
+        testRangeMinSegmentTreeBigDecimal(segments);
+    }
+
+    private void testRangeMinSegmentTreeBigDecimal(java.util.List<SegmentTree.Data.RangeMinimumData<BigDecimal>> segments) {   // Range Minimum Segment tree
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<BigDecimal>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<BigDecimal>>(segments, 5);
+
+        SegmentTree.Data.RangeMinimumData<BigDecimal> query = tree.query(0, 7);
+        assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.minimum==BigDecimal.valueOf(0));
+
+        query = tree.query(0, 17);
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.minimum==BigDecimal.valueOf(0));
+
+        // bounds checking
+        {
+            // min is first
+            query = tree.query(1, 3);
+            assertTrue("Segment tree query error. query=1->3 result="+query, tree, query.minimum==BigDecimal.valueOf(2));
+
+            // min is middle
+            query = tree.query(3, 5);
+            assertTrue("Segment tree query error. query=3->5 result="+query, tree, query.minimum==BigDecimal.valueOf(1));
+
+            // min is last
+            query = tree.query(1, 4);
+            assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum==BigDecimal.valueOf(1));
+        }
+
+        query = tree.query(7); // stabbing
+        assertTrue("Segment tree query error. query=7 result="+query, tree, query.minimum==null);
+    }
+
+    @Test
+    public void testRangeMinSegmentTreeLong() {
+        java.util.List<SegmentTree.Data.RangeMinimumData<Long>> segments = new ArrayList<SegmentTree.Data.RangeMinimumData<Long>>();
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(0,  Long.valueOf(4)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(1,  Long.valueOf(2)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(2,  Long.valueOf(6)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(3,  Long.valueOf(3)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(4,  Long.valueOf(1)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(5,  Long.valueOf(5)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(6,  Long.valueOf(0)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Long>(17, Long.valueOf(7)));    
+
+        // No matter which order the data is given, all tests should pass
+
+        // Initial order.
+        testRangeMinSegmentTreeLong(segments);
+
+        // Randomize it
+        Collections.shuffle(segments);
+        testRangeMinSegmentTreeLong(segments);
+
+        // Try in order
+        Collections.sort(segments);
+        testRangeMinSegmentTreeLong(segments);
+
+        // Try reverse order
+        Collections.sort(segments,REVERSE);
+        testRangeMinSegmentTreeLong(segments);
+    }
+
+    private void testRangeMinSegmentTreeLong(java.util.List<SegmentTree.Data.RangeMinimumData<Long>> segments) {   // Range Minimum Segment tree
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Long>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Long>>(segments, 5);
+
+        SegmentTree.Data.RangeMinimumData<Long> query = tree.query(0, 7);
+        assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.minimum==Long.valueOf(0));
+
+        query = tree.query(0, 17);
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.minimum==Long.valueOf(0));
+
+        // bounds checking
+        {
+            // min is first
+            query = tree.query(1, 3);
+            assertTrue("Segment tree query error. query=1->3 result="+query, tree, query.minimum==Long.valueOf(2));
+
+            // min is middle
+            query = tree.query(3, 5);
+            assertTrue("Segment tree query error. query=3->5 result="+query, tree, query.minimum==Long.valueOf(1));
+
+            // min is last
+            query = tree.query(1, 4);
+            assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum==Long.valueOf(1));
+        }
+
+        query = tree.query(7); // stabbing
+        assertTrue("Segment tree query error. query=7 result="+query, tree, query.minimum==null);
+    }
+
+    @Test
+    public void testRangeMinSegmentTreeDouble() {
+        java.util.List<SegmentTree.Data.RangeMinimumData<Double>> segments = new ArrayList<SegmentTree.Data.RangeMinimumData<Double>>();
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(0,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(1,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(2,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(3,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(4,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(5,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(6,  (Double) 4.23));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Double>(17, (Double) 4.23));    
+
+        // No matter which order the data is given, all tests should pass
+
+        // Initial order.
+        testRangeMinSegmentTreeDouble(segments);
+
+        // Randomize it
+        Collections.shuffle(segments);
+        testRangeMinSegmentTreeDouble(segments);
+
+        // Try in order
+        Collections.sort(segments);
+        testRangeMinSegmentTreeDouble(segments);
+
+        // Try reverse order
+        Collections.sort(segments,REVERSE);
+        testRangeMinSegmentTreeDouble(segments);
+    }
+
+    private void testRangeMinSegmentTreeDouble(java.util.List<SegmentTree.Data.RangeMinimumData<Double>> segments) {   // Range Minimum Segment tree
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Double>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Double>>(segments, 5);
+
+        SegmentTree.Data.RangeMinimumData<Double> query = tree.query(0, 7);
+        assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.minimum==0d);
+
+        query = tree.query(0, 17);
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.minimum==0d);
+
+        // bounds checking
+        {
+            // min is first
+            query = tree.query(1, 3);
+            assertTrue("Segment tree query error. query=1->3 result="+query, tree, query.minimum==(Double) 2.0);
+
+            // min is middle
+            query = tree.query(3, 5);
+            assertTrue("Segment tree query error. query=3->5 result="+query, tree, query.minimum==(Double) 1.0);
+
+            // min is last
+            query = tree.query(1, 4);
+            assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum==(Double) 1.0);
+        }
+
+        query = tree.query(7); // stabbing
+        assertTrue("Segment tree query error. query=7 result="+query, tree, query.minimum==null);
+    }
+
+    @Test
+    public void testRangeMinSegmentTreeFloat() {
+        java.util.List<SegmentTree.Data.RangeMinimumData<Float>> segments = new ArrayList<SegmentTree.Data.RangeMinimumData<Float>>();
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(0,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(1,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(2,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(3,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(4,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(5,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(6,  new Float (4.23)));
+        segments.add(new SegmentTree.Data.RangeMinimumData<Float>(17, new Float (4.23)));    
+
+        // No matter which order the data is given, all tests should pass
+
+        // Initial order.
+        testRangeMinSegmentTreeFloat(segments);
+
+        // Randomize it
+        Collections.shuffle(segments);
+        testRangeMinSegmentTreeFloat(segments);
+
+        // Try in order
+        Collections.sort(segments);
+        testRangeMinSegmentTreeFloat(segments);
+
+        // Try reverse order
+        Collections.sort(segments,REVERSE);
+        testRangeMinSegmentTreeFloat(segments);
+    }
+
+    private void testRangeMinSegmentTreeFloat(java.util.List<SegmentTree.Data.RangeMinimumData<Float>> segments) {   // Range Minimum Segment tree
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Float>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Float>>(segments, 5);
+
+        SegmentTree.Data.RangeMinimumData<Float> query = tree.query(0, 7);
+        assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.minimum==0d);
+
+        query = tree.query(0, 17);
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.minimum==0d);
+
+        // bounds checking
+        {
+            // min is first
+            query = tree.query(1, 3);
+            assertTrue("Segment tree query error. query=1->3 result="+query, tree, query.minimum== new Float(2.0));
+
+            // min is middle
+            query = tree.query(3, 5);
+            assertTrue("Segment tree query error. query=3->5 result="+query, tree, query.minimum== new Float(1.0));
+
+            // min is last
+            query = tree.query(1, 4);
+            assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum== new Float(1.0));
         }
 
         query = tree.query(7); // stabbing
