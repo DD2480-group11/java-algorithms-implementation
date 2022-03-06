@@ -5,6 +5,8 @@ import java.math.BigInteger;
 import java.util.Comparator;
 import com.jwetherell.algorithms.mathematics.Operations;
 
+import com.jwetherell.algorithms.mathematics.Operations;
+
 /**
  * Matrx. This Matrix implementation is designed to be more efficient
  * in cache. A matrix is a rectangular array of numbers, symbols, or expressions.
@@ -137,33 +139,9 @@ public class Matrix<T extends Number> {
             return output;
         for (int r = 0; r < output.rows; r++) {
             for (int c = 0; c < output.cols; c++) {
-                for (int i = 0; i < cols; i++) {
-                    T m1 = this.get(r, c);
-                    T m2 = input.get(r, c);
-                    T result;
-                    /* TODO: This is ugly and how to handle number overflow? */
-                    if (m1 instanceof BigDecimal || m2 instanceof BigDecimal) {
-                        BigDecimal result2 = ((BigDecimal)m1).add((BigDecimal)m2);
-                        result = (T)result2;
-                    } else if (m1 instanceof BigInteger || m2 instanceof BigInteger) {
-                        BigInteger result2 = ((BigInteger)m1).add((BigInteger)m2);
-                        result = (T)result2;
-                    } else if (m1 instanceof Long || m2 instanceof Long) {
-                        Long result2 = (m1.longValue() + m2.longValue());
-                        result = (T)result2;
-                    } else if (m1 instanceof Double || m2 instanceof Double) {
-                        Double result2 = (m1.doubleValue() + m2.doubleValue());
-                        result = (T)result2;
-                    } else if (m1 instanceof Float || m2 instanceof Float) {
-                        Float result2 = (m1.floatValue() + m2.floatValue());
-                        result = (T)result2;
-                    } else {
-                        // Integer
-                        Integer result2 = (m1.intValue() + m2.intValue());
-                        result = (T)result2;
-                    }
-                    output.set(r, c, result);
-                }
+                T m1 = this.get(r, c);
+                T m2 = input.get(r, c);
+                output.set(r, c, (T) Operations.addNumbers(m1, m2));
             }
         }
         return output;
@@ -176,33 +154,9 @@ public class Matrix<T extends Number> {
 
         for (int r = 0; r < output.rows; r++) {
             for (int c = 0; c < output.cols; c++) {
-                for (int i = 0; i < cols; i++) {
-                    T m1 = this.get(r, c);
-                    T m2 = input.get(r, c);
-                    T result;
-                    /* TODO: This is ugly and how to handle number overflow? */
-                    if (m1 instanceof BigDecimal || m2 instanceof BigDecimal) {
-                        BigDecimal result2 = ((BigDecimal)m1).subtract((BigDecimal)m2);
-                        result = (T)result2;
-                    } else if (m1 instanceof BigInteger || m2 instanceof BigInteger) {
-                        BigInteger result2 = ((BigInteger)m1).subtract((BigInteger)m2);
-                        result = (T)result2;
-                    } else if (m1 instanceof Long || m2 instanceof Long) {
-                        Long result2 = (m1.longValue() - m2.longValue());
-                        result = (T)result2;
-                    } else if (m1 instanceof Double || m2 instanceof Double) {
-                        Double result2 = (m1.doubleValue() - m2.doubleValue());
-                        result = (T)result2;
-                    } else if (m1 instanceof Float || m2 instanceof Float) {
-                        Float result2 = (m1.floatValue() - m2.floatValue());
-                        result = (T)result2;
-                    } else {
-                        // Integer
-                        Integer result2 = (m1.intValue() - m2.intValue());
-                        result = (T)result2;
-                    }
-                    output.set(r, c, result);
-                }
+                T m1 = this.get(r, c);
+                T m2 = input.get(r, c);
+                output.set(r, c, (T) Operations.subtractNumbers(m1, m2));
             }
         }
         return output;
@@ -218,69 +172,7 @@ public class Matrix<T extends Number> {
                 T[] row = getRow(r);
                 T[] column = input.getColumn(c);
                 T test = row[0];
-                /* TODO: This is ugly and how to handle number overflow? */
-                if (test instanceof BigDecimal) {
-                    BigDecimal result = BigDecimal.ZERO;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        BigDecimal result2 = ((BigDecimal)m1).multiply(((BigDecimal)m2));
-                        result = result.add(result2);
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof BigInteger) {
-                    BigInteger result = BigInteger.ZERO;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        BigInteger result2 = ((BigInteger)m1).multiply(((BigInteger)m2));
-                        result = result.add(result2);
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof Long) {
-                    Long result = 0l;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Long result2 = m1.longValue() * m2.longValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof Double) {
-                    Double result = 0d;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Double result2 = m1.doubleValue() * m2.doubleValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof Float) {
-                    Float result = 0f;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Float result2 = m1.floatValue() * m2.floatValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                } else {
-                    // Integer
-                    Integer result = 0;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Integer result2 = m1.intValue() * m2.intValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                }
+                output.set(r, c, (T) Operations.rowMultiplication(test, row, column, cols));
             }
         }
         return output;
@@ -293,6 +185,7 @@ public class Matrix<T extends Number> {
             }
         }
     }
+    
 
     /**
      * {@inheritDoc}
