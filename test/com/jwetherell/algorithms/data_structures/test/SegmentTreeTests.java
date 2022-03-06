@@ -864,22 +864,22 @@ public class SegmentTreeTests {
         FlatSegmentTree<SegmentTree.Data.RangeSumData<BigInteger>> tree = new FlatSegmentTree<SegmentTree.Data.RangeSumData<BigInteger>>(segments, 10);
 
         SegmentTree.Data.RangeSumData<BigInteger> query = tree.query(0, 8);
-        assertTrue("Segment tree query error. query=0->8 result="+query, tree, query.sum==BigInteger.valueOf(21));
+        assertTrue("Segment tree query error. query=0->8 result="+query, tree, query.sum.compareTo(BigInteger.valueOf(21)) ==0);
 
         query = tree.query(0, 17);
-        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.sum==BigInteger.valueOf(28));
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.sum.compareTo(BigInteger.valueOf(28))==0);
 
         query = tree.query(2, 5);
-        assertTrue("Segment tree query error. query=2->5 result="+query, tree, query.sum==BigInteger.valueOf(15));
+        assertTrue("Segment tree query error. query=2->5 result="+query, tree, query.sum.compareTo(BigInteger.valueOf(15))==0);
 
         query = tree.query(10, 17);
-        assertTrue("Segment tree query error. query=10->17 result="+query, tree, query.sum==BigInteger.valueOf(7));
+        assertTrue("Segment tree query error. query=10->17 result="+query, tree, query.sum.compareTo(BigInteger.valueOf(7))==0);
 
-        query = tree.query(16); // stabbing
+       query = tree.query(16); // stabbing
         assertTrue("Segment tree query error. query=16 result="+query, tree, query.sum==null);
 
         query = tree.query(17); // stabbing
-        assertTrue("Segment tree query error. query=17 result="+query, tree, query.sum==BigInteger.valueOf(7));
+        assertTrue("Segment tree query error. query=17 result="+query, tree, query.sum.compareTo(BigInteger.valueOf(7))==0);
     }
 
     @Test
@@ -916,22 +916,22 @@ public class SegmentTreeTests {
         FlatSegmentTree<SegmentTree.Data.RangeSumData<BigDecimal>> tree = new FlatSegmentTree<SegmentTree.Data.RangeSumData<BigDecimal>>(segments, 10);
 
         SegmentTree.Data.RangeSumData<BigDecimal> query = tree.query(0, 8);
-        assertTrue("Segment tree query error. query=0->8 result="+query, tree, query.sum==BigDecimal.valueOf(21));
+        assertTrue("Segment tree query error. query=0->8 result="+query, tree, query.sum.compareTo(BigDecimal.valueOf(21))==0);
 
         query = tree.query(0, 17);
-        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.sum==BigDecimal.valueOf(28));
+        assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.sum.compareTo(BigDecimal.valueOf(28))==0);
 
         query = tree.query(2, 5);
-        assertTrue("Segment tree query error. query=2->5 result="+query, tree, query.sum==BigDecimal.valueOf(15));
+        assertTrue("Segment tree query error. query=2->5 result="+query, tree, query.sum.compareTo(BigDecimal.valueOf(15))==0);
 
         query = tree.query(10, 17);
-        assertTrue("Segment tree query error. query=10->17 result="+query, tree, query.sum==BigDecimal.valueOf(7));
+        assertTrue("Segment tree query error. query=10->17 result="+query, tree, query.sum.compareTo(BigDecimal.valueOf(7))==0);
 
         query = tree.query(16); // stabbing
         assertTrue("Segment tree query error. query=16 result="+query, tree, query.sum==null);
 
         query = tree.query(17); // stabbing
-        assertTrue("Segment tree query error. query=17 result="+query, tree, query.sum==BigDecimal.valueOf(7));
+        assertTrue("Segment tree query error. query=17 result="+query, tree, query.sum.compareTo(BigDecimal.valueOf(7))==0);
     }
 
     @Test
