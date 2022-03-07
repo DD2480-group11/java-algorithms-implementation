@@ -164,7 +164,7 @@ public class MathematicsTest {
         assertTrue(result == expected);
      }
 
-     /* 
+     
      // We think this test highlights a bug in the program, since the test fails.
      // Therefore, we have commented out this test for now.
      @Test
@@ -174,8 +174,14 @@ public class MathematicsTest {
         //Requirement:
         //When multiplying two values where one or both is zero the result should be zero
         assertTrue(result ==expected);
+
+        result = Integer.parseInt(Multiplication.multiplyUsingLoopWithStringInput("0000", "0000"));
+        expected = 0;
+        //Requirement:
+        //When multiplying two values where one or both is zero the result should be zero
+        assertTrue(result ==expected);
     }
-    */
+    
 
     @Test
     public void division() {
