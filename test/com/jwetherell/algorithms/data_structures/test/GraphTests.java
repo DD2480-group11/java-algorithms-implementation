@@ -89,6 +89,42 @@ public class GraphTests {
     }
 
     @Test
+    public void testGraphCopy() {
+        final List<Vertex<Integer>> vertices = new ArrayList<Vertex<Integer>>();
+        final Vertex<Integer> p1 = new Vertex<Integer>(10,1);
+        vertices.add(p1);
+        final Vertex<Integer> p2 = new Vertex<Integer>(10,2);
+        vertices.add(p2);
+        final Vertex<Integer> p3 = new Vertex<Integer>(20,1);
+        vertices.add(p3);
+        final Vertex<Integer> p4 = new Vertex<Integer>(10,2);
+        vertices.add(p4);
+
+        final List<Edge<Integer>> edges = new ArrayList<Edge<Integer>>();
+        final Edge<Integer> e1 = new Edge<Integer>(1,p1,p2);
+        edges.add(e1);
+        final Edge<Integer> e2 = new Edge<Integer>(1,p2,p1);
+        edges.add(e2);
+        final Edge<Integer> e3 = new Edge<Integer>(1,p1,p2);
+        edges.add(e3);
+        final Edge<Integer> e4 = new Edge<Integer>(1,p1,p3);
+        edges.add(e4);
+        final Edge<Integer> e5 = new Edge<Integer>(1,p4,p2);
+        edges.add(e5);
+
+        final Graph<Integer> graph = new Graph<Integer>(TYPE.DIRECTED, vertices, edges);
+        final Graph<Integer> clone = new Graph<Integer>(graph);
+
+        final List<Edge<Integer>> graph1edges = graph.getEdges();
+        for (Edge<Integer> edge : graph1edges) {
+            edge.setCost(0);
+        }
+        for (Edge<Integer> edge : clone.getEdges()) {
+            Assert.assertTrue(edge.getCost()==1);
+        }
+    }
+
+    @Test
     public void testCostVertexPair() {
         final Graph.CostVertexPair<Integer> p1 = new Graph.CostVertexPair<Integer>(1, new Vertex<Integer>(10));
         final Graph.CostVertexPair<Integer> p2 = new Graph.CostVertexPair<Integer>(1, new Vertex<Integer>(11));
