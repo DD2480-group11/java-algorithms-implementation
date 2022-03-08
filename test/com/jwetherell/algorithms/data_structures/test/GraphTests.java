@@ -88,7 +88,6 @@ public class GraphTests {
         Assert.assertTrue(graph.equals(clone) && graph.hashCode()==clone.hashCode());
     }
 
-    
     @Test
     public void testGraphCopy() {
         final List<Vertex<Integer>> vertices = new ArrayList<Vertex<Integer>>();
