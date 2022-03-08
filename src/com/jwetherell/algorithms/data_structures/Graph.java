@@ -44,7 +44,7 @@ public class Graph<T extends Comparable<T>> {
 
         for (Vertex<T> v : this.getVertices()) {
             for (Edge<T> e : v.getEdges()) {
-                this.allEdges.add(e);
+                this.allEdges.add(new Edge<T>(e));
             }
         }
     }
